@@ -1,0 +1,118 @@
+:root {
+    --color-bg: #707070;
+    --color-bg-05: #00000088;
+    --color-text: hsl(101, 47%, 80%);
+}
+
+html,
+body {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: "Fira Mono", monospace;
+    color: var(--color-text);
+    z-index: 0;
+}
+
+.fullscreen {
+    min-height: 100vh;
+    box-shadow: 5px 5px 15px var(--color-bg-05) inset, -5px -5px 15px var(--color-bg-05) inset;
+}
+
+.w-fit {
+    width: fit-content;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-full {
+    width: 100vw;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-centre {
+    align-items: center;
+}
+
+.centre {
+    text-align: center;
+    align-self: center;
+    margin: 0 auto;
+}
+
+.fs-28 {
+    font-size: 28px;
+}
+
+.input {
+    border: 0;
+    outline: none;
+    padding: 0.15em 0;
+    text-align: center;
+    color: var(--color-text);
+}
+
+.rgba0001 {background-color: rgba(0,0,0,0.1);}
+
+.fadein-white {
+    transition: background-color 0.5s;
+}
+
+.fadein-white:hover {
+    background-color: rgba(0, 0, 0, 0.334);
+}
+
+.list li, .list a, .list a:visited, .list a:active {
+    color: var(--color-text);
+    text-decoration: none;
+    width: fit-content;
+    margin: 0px;
+}
+
+.list-inside {
+    list-style-position: inside;
+}
+
+.grid-3-3 {
+    display: grid;
+    grid-template-columns: auto auto auto;;
+    padding: 0px;
+    margin: 0px;
+}
+
+.test {border: 1px solid red;}
+
+.p-halfx-1y {padding: 1rem 0.5rem;}
+.lower-12 {transform: translateY(12rem);}
+
+.fs-20 {font-size: 20px;}
+
+.z-0 {z-index: -1;}
+.z-1 {z-index: 2;}
+.z-2 {z-index: 4;}
+
+#bg {
+    position: absolute;
+    z-index: -1;
+    margin: 0px;
+    padding: 0px;
+}
+
+.bg-col {
+    background-color: var(--color-bg);
+    width: 100vw;
+    position: absolute;
+}

@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Page</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <h1>Hello World</h1>
+
+<div class="fullscreen bg-col z-0"></div>
+
+<img id="bg" class="z-1" alt="Hokkaido">
+
+<body class="fullscreen flex justify-center align-centre z-2">
+    <div class="flex flex-col align-centre lower-12">
+        <form action="https://google.com/search" method="get" class="w-100">
+            <input class="w-100 fs-28 input rgba0001 fadein-white p-halfx-1y" type="text" name="q" placeholder="Search...">
+        </form>
+        <ol class="grid-3-3 list-inside list rgba0001">
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 1</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 3</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 4</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 5</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 6</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 2</a></li>
+        </ol>
+    </div>
+
 </body>
+
 </html>
+
+<script>
+    let bg = document.getElementById("bg");
+    let imgUrl = `https://picsum.photos/${window.innerWidth}/${window.innerHeight}`;
+    bg.src = imgUrl;
+    let img;
+    let src = "";
+
+    //getUnsplash();
+    
+    window.onresize = resizeBgImg;
+
+    function getUnsplash() {
+        let response;
+        let max = 375;  //manually or automatically update this later
+        let page = Math.floor(Math.random() * max);
+
+        fetch("https://api.unsplash.com/search/photos?query=Hokkaido&&per_page=1&&page=" + page, { headers: { "Authorization": "Client-ID v2K5H9978Yf62yTnDUgd85buy13X1ajy0BpbjGVbDg0" } })
+            .then(response => response.json())
+            .then(data => {              
+                img = data.results[0];
+                imgUrl = img.urls.raw;
+                resizeBgImg();
+            });
+    }
+
+    function resizeBgImg() {
+        src = `${imgUrl}`;
+        if (img.width > window.innerWidth) src = `${imgUrl}&w=${window.innerWidth}`;
+        if (img.height > window.innerHeight) src = `${imgUrl}&h=${window.innerHeight}`;
+
+        bg.src = src;
+    }
+
+</script>
