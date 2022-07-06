@@ -14,17 +14,17 @@
 <img id="bg" class="z-1" alt="Hokkaido">
 
 <body class="fullscreen flex justify-center align-centre z-2">
-    <div class="flex flex-col align-centre lower-12">
-        <form action="https://google.com/search" method="get" class="w-100">
-            <input class="w-100 fs-28 input rgba0001 fadein-white p-halfx-1y" type="text" name="q" placeholder="Search...">
+    <div class="flex flex-col align-centre lower-12 w-fit rgba0001">
+        <form action="https://google.com/search" method="get" class="no-margin no-padding w-100">
+            <input class="w-100 centre fs-28 input fadein-white p-halfx-1y" type="text" name="q" placeholder="Search...">
         </form>
-        <ol class="grid-3-3 list-inside list rgba0001">
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 1</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 3</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 4</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 5</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 6</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="#">Link 2</a></li>
+        <ol class="grid-3-3 list-inside list">
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://youtube.com">Youtube</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://reddit.com">Reddit</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://github.com">GitHub</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://onedrive.com">Onedrive</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://editor.p5js.org">P5JS</a></li>
+            <li class="fadein-white p-halfx-1y fs-20"><a href="https://soundcloud.com">Soundcloud</a></li>
         </ol>
     </div>
 
@@ -39,7 +39,7 @@
     let img;
     let src = "";
 
-    //getUnsplash();
+    getUnsplash();
     
     window.onresize = resizeBgImg;
 
