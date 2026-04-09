@@ -18,7 +18,8 @@
         let max = 999;  //manually or automatically update this later
         let randomPage = Math.floor(Math.random() * max);
 
-        const headers = { "Authorization": "Client-ID v2K5H9978Yf62yTnDUgd85buy13X1ajy0BpbjGVbDg0" };   // to hide - lol
+        const k = atob("djJLN0g5OTc4WWY2MnlUbkRVZ2Q4NWJ1eTEzWDFhankeMEJwYmpHVmJEMG==");
+        const headers = { "Authorization": `Client-ID ${k}` };
 
         fetch("https://api.unsplash.com/search/photos?query=Japan&&per_page=1&&page=" + randomPage, { headers: headers })
             .then(response => {
