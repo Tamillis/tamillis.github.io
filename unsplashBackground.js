@@ -22,7 +22,10 @@
 
         fetch("https://api.unsplash.com/search/photos?query=Japan&&per_page=1&&page=" + randomPage, { headers: headers })
             .then(response => {
-                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.ok) {
+                    console.error("Network response was not ok", response);
+                    return response.text();
+                }
 
                 const remaining = response.headers.get("X-RateLimit-Remaining");
                 console.log(`Rate Limit Remaining: ${remaining}`);
@@ -33,11 +36,18 @@
             })  
             .then(data => {
                 console.debug(data);
-                let url = data.results[0].urls.raw;
-                console.log("Got fresh URL: " + url);
-                localStorage.setItem("unsplash_bg_cache", url);
-                localStorage.setItem("unsplash_bg_cache_timestamp", Date.now());
-                applyBackground(url);
+                let results = data.results;
+                if(results) {
+                    let url = results[0].urls.raw;
+                    console.log("Got fresh URL: " + url);
+                    localStorage.setItem("unsplash_bg_cache", url);
+                    localStorage.setItem("unsplash_bg_cache_timestamp", Date.now());
+                    applyBackground(url);
+                }
+                else {
+                    console.warn("No results found: ", data);
+                    applyBackground("https://picsum.photos/2000");
+                }
             });
     }
 

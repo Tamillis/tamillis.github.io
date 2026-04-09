@@ -331,15 +331,28 @@
       <!-- CSV -->
       <div class="panel" id="panel-csv">
         <p class="section-title">CSV row → INSERT statement</p>
-        <p class="section-desc">Paste a header row and a data row (comma-separated). Generates a single INSERT.</p>
-        <label>Header row</label>
-        <textarea id="csv-head" rows="2" placeholder="ID,FirstName,LastName,Email" oninput="genCsv()"></textarea>
-        <label style="margin-top:10px;">Data row</label>
-        <textarea id="csv-data" rows="2" placeholder="1,Jane,O'Brien,jane@example.com" oninput="genCsv()"></textarea>
+        <p class="section-desc">Paste new line delineated rows with comma delineated columns. Toggle header row if one is being used.</p>
+        <label style="margin-top:10px;">CSV data</label>
+        <textarea id="csv-input" rows="2" placeholder="ID,FirstName,LastName,Email&#10;1,Jane,O'Brien,jane@example.com" oninput="parseCsv()"></textarea>
+
         <div class="row" style="margin-top:10px;">
           <label style="margin:0;">Table</label>
-          <input type="text" id="csv-table" value="dbo.MyTable" oninput="genCsv()">
+          <input type="text" id="csv-table" placeholder="dbo.MyTable" oninput="genCsvInsert()">
+          <label style="margin:0; white-space:nowrap;">
+            <input type="checkbox" id="csv-one" onchange="genCsvInsert()" style="margin-right:4px;">one per line
+          </label>
+          <label style="margin:0; white-space:nowrap;">
+            <input type="checkbox" id="csv-headers" onchange="parseCsv()" style="margin-right:4px;">first row =
+            headers
+          </label>
         </div>
+        
+        <div id="csv-col-wrap" style="display:none;">
+          <div class="out-label">Column names & types</div>
+          <div class="col-wrap"><span>Column name</span><span>Type</span></div>
+          <div id="csv-cols"></div>
+        </div>
+
       </div>
 
       <div id="out-wrap" style="display:none;">
@@ -353,6 +366,8 @@
   <script>
     let excelRows = [];
     let excelColDefs = [];
+    let csvRows = [];
+    let csvColDefs = [];
     let updateRows = [];
     let updateColDefs = [];
 
@@ -630,13 +645,70 @@
       setOut(`case\n${whens}${elseClause}\nend ${labelClause}`.trim());
     }
 
-    function genCsv() {
-      const head = select('csv-head').value.split(',').map(s => s.trim()).filter(Boolean);
-      const data = select('csv-data').value.split(',').map(s => s.trim()).filter(Boolean);
-      const table = select('csv-table').value.trim();
-      if (!head.length || !data.length) { setOut(''); return; }
-      const vals = data.map(v => /^\d+(\.\d+)?$/.test(v) ? v : `'${esc(v)}'`).join(', ');
-      setOut(`insert into ${table} (${head.join(', ')})\nvalues (${vals});`);
+    
+    function parseCsv() {
+      const raw = select('csv-input').value.trim();
+      if (!raw) {
+        csvRows = []; 
+        csvColDefs = [];
+        select('csv-col-wrap').style.display = 'none';
+        setOut('');
+        return;
+      }
+      const allRows = raw.split('\n').map(r => r.split(','));
+
+      const useHeaders = select('csv-headers').checked;
+      const headerRow = useHeaders ? allRows[0] : null;
+      csvRows = useHeaders ? allRows.slice(1) : allRows;
+
+      const maxCols = Math.max(...csvRows.map(r => r.length));
+
+      csvColDefs = Array.from({ length: maxCols }, (_, i) => {
+        const colVals = csvRows.map(r => r[i] || '');
+        const name = (useHeaders && headerRow && headerRow[i])
+          ? headerRow[i].replaceAll(' ', '')
+          : ('Column' + (i + 1));
+        return { name, type: guessType(colVals) };
+      });
+
+      renderCsvColEditor();
+      genCsvInsert();
+      select('csv-col-wrap').style.display = '';
+    }
+
+    function renderCsvColEditor() {
+      const el = select('csv-cols');
+      el.innerHTML = csvColDefs.map((col, i) => `
+        <div class="col-wrap">
+            <input type="text" value="${col.name}" oninput="csvColDefs[${i}].name=this.value;genCsvInsert();">
+            <select onchange="csvColDefs[${i}].type=this.value;genCsvInsert();">${typeOptions(col.type)}</select>
+            <button class="del" onclick="dropCsvCol(${i})">X</button>
+        </div>
+    `).join('');
+    }
+
+    function dropCsvCol(i) {
+      csvColDefs.splice(i, 1);
+      csvRows = csvRows.map(r => { r.splice(i, 1); return r; });
+      renderCsvColEditor();
+      genCsvInsert();
+    }
+
+    function genCsvInsert() {
+      if (!csvRows.length || !csvColDefs.length) { setOut(''); return; }
+      const table = select('csv-table').value.trim() || select('csv-table').placeholder;
+
+      const cols = '(' + csvColDefs.map(c => c.name).join(', ') + ')';
+
+      const valRows = csvRows.map(row =>
+        '    (' + csvColDefs.map((col, i) => sqlVal(row[i], col.type)).join(', ') + ')'
+      );
+
+      const out = select('csv-one').checked
+        ? valRows.map(vr => `insert into ${table} ${cols}\nvalues\n${vr};`).join('\n\n')
+        : `insert into ${table} ${cols}\nvalues\n${valRows.join(',\n')};`;
+
+      setOut(out);
     }
   </script>
 
