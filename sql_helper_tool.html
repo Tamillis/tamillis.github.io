@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Helper Tool</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .container {
+      padding: 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+
+      background-color: rgba(0,0,0,0.5);
+      border-radius: var(--border-radius);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .tabs>* {
+      width: calc(25% - 1rem);
+    }
+
+    .tab {
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      border: 0.5px solid var(--color-border-secondary);
+      background-color: var(--color-background-primary);
+
+      color: var(--color-text-highlight);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .tab:hover {
+      background-color: var(--color-background-secondary);
+    }
+
+    .tab.active {
+      background: var(--color-background-secondary);
+      color: var(--color-text);
+      border-color: var(--color-border-primary);
+    }
+
+    .outer-row {
+      display: flex;
+      gap: 1rem;
+      width:100%;
+      padding: 0;
+      margin: 0;
+
+      height: 75vh;
+    }
+
+    .outer-row>* {
+      width: calc(50% - 1rem);
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    label {
+      color: var(--color-text-highlight);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      font-family: var(--font-mono);
+      resize: vertical;
+
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 60px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+
+    input[type=text],
+    select, textarea {
+      font-size: 0.75em;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      border: 0.5px solid var(--color-border-secondary);
+      outline: none;
+      background: var(--color-background-secondary);
+      color: var(--color-text-highlight);
+    }
+
+    .out-label {
+      color: var(--color-text);
+      font-weight: bold;
+      margin: 16px 0 6px;
+    }
+
+    .output {
+      width: 100%;
+      font-family: var(--font-mono);
+
+      padding: 6px 10px;
+      border-radius: var(--border-radius);
+      border: 0.5px solid var(--color-border-secondary);
+      background: var(--color-background-secondary);
+      color: var(--color-text);
+
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 60px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .copy-hint {
+      font-size: 0.66rem;
+      color: var(--color-text);
+      margin-top: 4px;
+    }
+
+    .copied {
+      color: var(--color-text-highlight);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    .section-desc {
+      color: var(--color-text);
+      margin-bottom: 16px;
+    }
+
+    .small {
+      font-size: 9px;
+      color: var(--color-text-dark);
+    }
+
+    .col-row select.role {
+      width: 90px;
+    }
+
+    .col-wrap {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .col-wrap>* {
+      width: 33%;
+    }
+
+    .del {
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
+      padding: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>SQL helper tool</h1>
+    <h2 class="sr-only">Convert copy-paste Excel and CSV lists into SQL-ready syntax</h2>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('excel')">Excel → INSERT</button>
+      <button class="tab" onclick="switchTab('csv')">CSV → INSERT</button>
+      <button class="tab" onclick="switchTab('update')">Excel → UPDATE</button>
+      <button class="tab" onclick="switchTab('values')">List → VALUES</button>
+      <button class="tab" onclick="switchTab('in')">List → IN (...)</button>
+      <button class="tab" onclick="switchTab('case')">List → CASE WHEN</button>
+      <button class="tab" onclick="switchTab('cols')">Columns → SELECT</button>
+      <button class="tab" onclick="switchTab('escape')">Escape strings</button>
+    </div>
+
+    <div class="outer-row">
+      <!-- EXCEL -->
+      <div class="panel active" id="panel-excel">
+        <p class="section-title">Excel paste → INSERT</p>
+        <p class="section-desc">Paste directly from Excel or Google Sheets. Tab-separated, any number of columns. Name
+          each column and pick its type — strings get quoted and single-quotes escaped automatically.</p>
+
+        <label>Paste your Excel data here</label>
+        <textarea id="excel-input" rows="5"
+          placeholder="BAXI - (ELSON,SANTON & HEATRAE)&#9;Customer must contact...&#9;0344 871 1540&#10;BURCO&#9;Plumbnation to contact...&#9;0333 220 6070"
+          oninput="parseExcel()"></textarea>
+
+        <div class="row">
+          <label style="margin:0;">Table</label>
+          <input type="text" id="excel-table" placeholder="dbo.MyTable" oninput="genExcel()">
+          <label style="margin:0; white-space:nowrap;">
+            <input type="checkbox" id="excel-one" onchange="genExcel()" style="margin-right:4px;">one per line
+          </label>
+          <label style="margin:0; white-space:nowrap;">
+            <input type="checkbox" id="excel-headers" onchange="parseExcel()" style="margin-right:4px;">first row =
+            headers
+          </label>
+        </div>
+
+        <div id="excel-col-wrap" style="display:none;">
+          <div class="out-label">Column names & types</div>
+          <div class="col-wrap"><span>Column name</span><span>Type</span></div>
+          <div id="excel-cols"></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-update">
+        <p class="section-title">Excel paste → UPDATE statements</p>
+        <p class="section-desc">Paste the key column and value column(s) from Excel. You can pick which column is the
+          key by setting it to WHERE, and all value columns to SET. IGNORE ignores.
+        </p>
+
+        <label>Paste your Excel data here</label>
+        <textarea id="update-input" rows="5" placeholder="SKU&#9;Price&#10;ABC123&#9;19.99&#10;XYZ456&#9;34.50"
+          oninput="parseUpdate()"></textarea>
+
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Table</label>
+          <input type="text" id="update-table" placeholder="dbo.MyTable" oninput="genUpdate()">
+          <label style="margin:0; white-space:nowrap;">
+            <input type="checkbox" id="update-headers" onchange="parseUpdate()" style="margin-right:4px;">first row =
+            headers
+          </label>
+        </div>
+
+        <div id="update-col-wrap" style="display:none;">
+          <div class="out-label">Column roles</div>
+          <div class="col-wrap"><span>Column name</span><span>Type</span><span>Role</span></div>
+          <div id="update-cols"></div>
+        </div>
+      </div>
+
+      <!-- VALUES -->
+      <div class="panel" id="panel-values">
+        <p class="section-title">List → VALUES inline table</p>
+        <p class="section-desc">One item per line. Generates a VALUES block for use in a FROM clause with LEFT JOIN.</p>
+        <label>Items (one per line)</label>
+        <textarea id="values-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO"
+          oninput="genValues()"></textarea>
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Alias</label>
+          <input type="text" id="values-alias" value="v" style="width:80px;flex:none;" oninput="genValues()">
+          <label style="margin:0;">Column</label>
+          <input type="text" id="values-col" value="Company" style="width:130px;flex:none;" oninput="genValues()">
+        </div>
+      </div>
+
+      <!-- IN -->
+      <div class="panel" id="panel-in">
+        <p class="section-title">List → IN (...)</p>
+        <p class="section-desc">One item per line. Wraps each in quotes and joins with commas for a WHERE clause.</p>
+        <label>Items (one per line)</label>
+        <textarea id="in-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO" oninput="genIn()"></textarea>
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Quote style</label>
+          <select id="in-quote" onchange="genIn()">
+            <option value="single">Single ' (strings)</option>
+            <option value="none">None (numbers)</option>
+            <option value="double">Double " (identifiers)</option>
+            <option value="square">Square [] (SQL Server)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ESCAPE -->
+      <div class="panel" id="panel-escape">
+        <p class="section-title">Escape string values</p>
+        <p class="section-desc">Doubles single quotes so O'Brien stops being a syntax error. One item per line.</p>
+        <label>Items (one per line)</label>
+        <textarea id="esc-input" rows="6" placeholder="O'Brien&#10;MARTIN IND'S" oninput="genEsc()"></textarea>
+      </div>
+
+      <!-- COLS -->
+      <div class="panel" id="panel-cols">
+        <p class="section-title">Column list → SELECT statement</p>
+        <p class="section-desc">Paste column names (one per line or comma-separated) and get a formatted SELECT.</p>
+        <label>Columns</label>
+        <textarea id="cols-input" rows="5" placeholder="ID&#10;FirstName&#10;LastName&#10;Email"
+          oninput="genColSelect()"></textarea>
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Table alias</label>
+          <input type="text" id="cols-alias" value="t" style="width:80px;flex:none;" oninput="genColSelect()">
+          <label style="margin:0;">FROM table</label>
+          <input type="text" id="cols-table" placeholder="dbo.MyTable" oninput="genColSelect()">
+        </div>
+      </div>
+
+      <!-- CASE -->
+      <div class="panel" id="panel-case">
+        <p class="section-title">List → CASE WHEN map</p>
+        <p class="section-desc">Map values to labels. Format: <code style="font-size:12px;">value=label</code> per line.
+        </p>
+        <label>Mappings (value=label per line)</label>
+        <textarea id="case-input" rows="6" placeholder="1=Active&#10;2=Inactive&#10;3=Pending"
+          oninput="genCase()"></textarea>
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Column
+            <input type="text" id="case-col" placeholder="ColumnName" style="width:130px;flex:none;"
+              oninput="genCase()">
+          </label>
+          <label style="margin:0;">Else
+            <input type="text" id="case-else" placeholder="..." style="width:110px;flex:none;" oninput="genCase()">
+          </label>
+          <label style="margin:0;">Alias
+            <input type="text" id="case-alias" placeholder="Label" style="width:130px;flex:none;" oninput="genCase()">
+          </label>
+        </div>
+      </div>
+
+      <!-- CSV -->
+      <div class="panel" id="panel-csv">
+        <p class="section-title">CSV row → INSERT statement</p>
+        <p class="section-desc">Paste a header row and a data row (comma-separated). Generates a single INSERT.</p>
+        <label>Header row</label>
+        <textarea id="csv-head" rows="2" placeholder="ID,FirstName,LastName,Email" oninput="genCsv()"></textarea>
+        <label style="margin-top:10px;">Data row</label>
+        <textarea id="csv-data" rows="2" placeholder="1,Jane,O'Brien,jane@example.com" oninput="genCsv()"></textarea>
+        <div class="row" style="margin-top:10px;">
+          <label style="margin:0;">Table</label>
+          <input type="text" id="csv-table" value="dbo.MyTable" oninput="genCsv()">
+        </div>
+      </div>
+
+      <div id="out-wrap" style="display:none;">
+        <div class="out-label">Output</div>
+        <div class="output" id="shared-out" onclick="copyShared()"></div>
+        <div class="copy-hint" id="shared-hint">click to copy</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let excelRows = [];
+    let excelColDefs = [];
+    let updateRows = [];
+    let updateColDefs = [];
+
+    const typeOptions = (colType) => ['nvarchar', 'int', 'decimal', 'bit', 'date', 'datetime']
+      .map(t =>
+        `<option value="${t}"${colType === t ? ' selected' : ''}>${t}</option>`)
+      .join('');
+
+    let select = (selector) => document.getElementById(selector) ?? document.querySelector(selector);
+    let selectAll = (selector) => document.querySelectorAll(selector);
+
+    const tabState = {
+      excel: { output: '' },
+      update: { output: '' },
+      values: { output: '' },
+      in: { output: '' },
+      escape: { output: '' },
+      cols: { output: '' },
+      case: { output: '' },
+      csv: { output: '' },
+    };
+
+    let activeTab = 'excel';
+
+    function switchTab(name) {
+      selectAll('.tab').forEach(t => t.classList.remove('active'));
+      selectAll('.panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      select('panel-' + name).classList.add('active');
+      activeTab = name;
+      renderSharedOut();
+    }
+
+    function setOut(text) {
+      tabState[activeTab].output = text;
+      renderSharedOut();
+    }
+
+    function renderSharedOut() {
+      const text = tabState[activeTab].output;
+      const wrap = select('out-wrap');
+      const el = select('shared-out');
+      const hint = select('shared-hint');
+      wrap.style.display = text ? '' : 'none';
+      el.textContent = text;
+      hint.textContent = 'click to copy';
+      hint.classList.remove('copied');
+    }
+
+    function copyShared() {
+      const text = tabState[activeTab].output;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const h = select('shared-hint');
+        h.textContent = 'copied!';
+        h.classList.add('copied');
+        setTimeout(() => {
+          h.textContent = 'click to copy';
+          h.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    function esc(s) { return String(s).replace(/'/g, "''"); }
+
+    function lines(id) {
+      return select(id).value.split('\n').map(s => s.trim()).filter(Boolean);
+    }
+
+    function guessType(values) {
+      const nonEmpty = values.filter(v => v !== '');
+      if (!nonEmpty.length) return 'nvarchar';
+      if (nonEmpty.every(v => /^-?\d+$/.test(v))) return 'int';
+      if (nonEmpty.every(v => /^-?\d+(\.\d+)?$/.test(v))) return 'decimal';
+      return 'nvarchar';
+    }
+
+    function parseExcel() {
+      const raw = select('excel-input').value.trim();
+      if (!raw) {
+        excelRows = []; excelColDefs = [];
+        select('excel-col-wrap').style.display = 'none';
+        setOut('');
+        return;
+      }
+
+      const useHeaders = select('excel-headers').checked;
+      const allRows = raw.split('\n').map(r => r.split('\t'));
+      const headerRow = useHeaders ? allRows[0] : null;
+      excelRows = useHeaders ? allRows.slice(1) : allRows;
+
+      const maxCols = Math.max(...excelRows.map(r => r.length));
+
+      excelColDefs = Array.from({ length: maxCols }, (_, i) => {
+        const colVals = excelRows.map(r => r[i] || '');
+        const name = (useHeaders && headerRow && headerRow[i])
+          ? headerRow[i].replaceAll(' ', '')
+          : ('Column' + (i + 1));
+        return { name, type: guessType(colVals) };
+      });
+
+      renderColEditor();
+      genExcel();
+      select('excel-col-wrap').style.display = '';
+    }
+
+    function renderColEditor() {
+      const el = select('excel-cols');
+      el.innerHTML = excelColDefs.map((col, i) => `
+        <div class="col-wrap">
+            <input type="text" value="${col.name}" oninput="excelColDefs[${i}].name=this.value;genExcel();">
+            <select onchange="excelColDefs[${i}].type=this.value;genExcel();">${typeOptions(col.type)}</select>
+            <button class="del" onclick="dropCol(${i})">X</button>
+        </div>
+    `).join('');
+    }
+
+    function dropCol(i) {
+      excelColDefs.splice(i, 1);
+      excelRows = excelRows.map(r => { r.splice(i, 1); return r; });
+      renderColEditor();
+      genExcel();
+    }
+
+    function sqlVal(raw, type) {
+      const v = (raw || '').trim();
+      if (v === '' || v.toLowerCase() === 'null') return 'NULL';
+      if (type === 'int' || type === 'decimal' || type === 'bit') return v;
+      return `'${esc(v)}'`;
+    }
+
+    function genExcel() {
+      if (!excelRows.length || !excelColDefs.length) { setOut(''); return; }
+      const table = select('excel-table').value.trim() || select('excel-table').placeholder;
+      const onePerLine = select('excel-one').checked;
+      const cols = '(' + excelColDefs.map(c => c.name).join(', ') + ')';
+
+      const valRows = excelRows.map(row =>
+        '    (' + excelColDefs.map((col, i) => sqlVal(row[i], col.type)).join(', ') + ')'
+      );
+
+      const out = onePerLine
+        ? valRows.map(vr => `insert into ${table} ${cols}\nvalues\n${vr};`).join('\n\n')
+        : `insert into ${table} ${cols}\nvalues\n${valRows.join(',\n')};`;
+
+      setOut(out);
+    }
+
+    function parseUpdate() {
+      const raw = select('update-input').value.trim();
+      if (!raw) {
+        updateRows = []; updateColDefs = [];
+        select('update-col-wrap').style.display = 'none';
+        setOut('');
+        return;
+      }
+
+      const useHeaders = select('update-headers').checked;
+      const allRows = raw.split('\n').map(r => r.split('\t'));
+      const headerRow = useHeaders ? allRows[0] : null;
+      updateRows = useHeaders ? allRows.slice(1) : allRows;
+
+      const maxCols = Math.max(...updateRows.map(r => r.length));
+
+      updateColDefs = Array.from({ length: maxCols }, (_, i) => {
+        const colVals = updateRows.map(r => r[i] || '');
+        const name = (useHeaders && headerRow && headerRow[i])
+          ? headerRow[i].replaceAll(' ', '')
+          : ('Column' + (i + 1));
+        // first col defaults to WHERE key, rest default to SET
+        const role = i === 0 ? 'where' : 'set';
+        return { name, type: guessType(colVals), role };
+      });
+
+      renderUpdateColEditor();
+      genUpdate();
+      select('update-col-wrap').style.display = '';
+    }
+
+    function renderUpdateColEditor() {
+      const el = select('update-cols');
+
+      el.innerHTML = updateColDefs.map((col, i) => `
+        <div class="col-wrap">
+            <input type="text" value="${col.name}" oninput="updateColDefs[${i}].name=this.value;genUpdate();">
+            <select onchange="updateColDefs[${i}].type=this.value;genUpdate();">${typeOptions(col.type)}</select>
+            <select class="role" onchange="updateColDefs[${i}].role=this.value;genUpdate();">
+                <option value="set"${col.role === 'set' ? ' selected' : ''}>SET</option>
+                <option value="where"${col.role === 'where' ? ' selected' : ''}>WHERE</option>
+                <option value="ignore"${col.role === 'ignore' ? ' selected' : ''}>ignore</option>
+            </select>
+        </div>
+    `).join('');
+    }
+
+    function genUpdate() {
+      if (!updateRows.length || !updateColDefs.length) { setOut(''); return; }
+      const table = select('update-table').value.trim() || 'dbo.MyTable';
+
+      const setCols = updateColDefs.filter(c => c.role === 'set');
+      const whereCols = updateColDefs.filter(c => c.role === 'where');
+
+      if (!setCols.length || !whereCols.length) {
+        setOut('-- assign at least one SET column and one WHERE column above');
+        return;
+      }
+
+      const statements = updateRows.map(row => {
+        const setClause = setCols.map(col => {
+          const i = updateColDefs.indexOf(col);
+          return `${col.name} = ${sqlVal(row[i], col.type)}`;
+        }).join(', ');
+
+        const whereClause = whereCols.map(col => {
+          const i = updateColDefs.indexOf(col);
+          return `${col.name} = ${sqlVal(row[i], col.type)}`;
+        }).join(' and ');
+
+        return `update ${table} set ${setClause} where ${whereClause};`;
+      });
+
+      setOut(statements.join('\n'));
+    }
+
+    function genValues() {
+      const items = lines('values-input');
+      const alias = select('values-alias').value.trim() || 'v';
+      const col = select('values-col').value.trim() || 'Value';
+      if (!items.length) { setOut(''); return; }
+      const rows = items.map(i => `    ('${esc(i)}')`).join(',\n');
+      setOut(`(\n    values\n${rows}\n) as ${alias}(${col})`);
+    }
+
+    function genIn() {
+      const items = lines('in-input');
+      const q = select('in-quote').value;
+      if (!items.length) { setOut(''); return; }
+      const wrap = v => q === 'single' ? `'${esc(v)}'` : q === 'double' ? `"${v}"` : q === 'square' ? `[${v}]` : v;
+      setOut('(\n    ' + items.map(wrap).join(',\n    ') + '\n)');
+    }
+
+    function genEsc() {
+      const items = lines('esc-input');
+      if (!items.length) { setOut(''); return; }
+      setOut(items.map(i => esc(i)).join('\n'));
+    }
+
+    function genColSelect() {
+      const raw = select('cols-input').value;
+      const alias = select('cols-alias').value.trim();
+      const table = select('cols-table').value.trim() || select('cols-table').placeholder;
+      const cols = raw.split(/[\n,]/).map(s => s.trim()).filter(Boolean);
+      if (!cols.length) { setOut(''); return; }
+      const prefix = alias ? alias + '.' : '';
+      const first = `select ${prefix}${cols[0]}`;
+      const rest = cols.slice(1).map(c => `     , ${prefix}${c}`).join('\n');
+      setOut(first + (rest ? '\n' + rest : '') + `\nfrom   ${table}${alias ? ' ' + alias : ''}`);
+    }
+
+    function genCase() {
+      const maps = lines('case-input');
+      const col = select('case-col').value.trim() || select('case-col').placeholder;
+      const alias = select('case-alias').value.trim();
+      const els = select('case-else').value.trim();
+      if (!maps.length) { setOut(''); return; }
+      const whens = maps.map(m => {
+        const [val, ...rest] = m.split('=');
+        const label = rest.join('=').trim();
+        const isNum = /^\d+$/.test(val.trim());
+        const v = isNum ? val.trim() : `'${esc(val.trim())}'`;
+        return `\twhen ${col} = ${v} then '${esc(label)}'`;
+      }).join('\n');
+      const elseClause = els ? `\n\telse '${esc(els)}'` : '';
+      const labelClause = alias ? `\n\tas ${esc(alias)}` : '';
+      setOut(`case\n${whens}${elseClause}\nend ${labelClause}`.trim());
+    }
+
+    function genCsv() {
+      const head = select('csv-head').value.split(',').map(s => s.trim()).filter(Boolean);
+      const data = select('csv-data').value.split(',').map(s => s.trim()).filter(Boolean);
+      const table = select('csv-table').value.trim();
+      if (!head.length || !data.length) { setOut(''); return; }
+      const vals = data.map(v => /^\d+(\.\d+)?$/.test(v) ? v : `'${esc(v)}'`).join(', ');
+      setOut(`insert into ${table} (${head.join(', ')})\nvalues (${vals});`);
+    }
+  </script>
+
+  <script src="./unsplashBackground.js"></script>
+</body>
+
+</html>

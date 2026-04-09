@@ -5,64 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Page</title>
+    <title>Tamillis - Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<div class="fullscreen bg-col z-0"></div>
-
-<img id="bg" class="z-1" alt="Hokkaido">
-
-<body class="fullscreen flex justify-center align-centre z-2">
-    <div class="flex flex-col align-centre lower-12 w-fit rgba0001">
-        <form action="https://google.com/search" method="get" class="no-margin no-padding w-100">
-            <input class="w-100 centre fs-28 input fadein-white p-halfx-1y" type="text" name="q" placeholder="Search...">
+<body>
+    <div class="menu-container">
+        <form action="https://google.com/search" method="get">
+            <input class="input fadein transparent" type="text" name="q"
+                placeholder="Search...">
         </form>
-        <ol class="grid-3-3 list-inside list">
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://youtube.com">Youtube</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://reddit.com">Reddit</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://github.com">GitHub</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://onedrive.com">Onedrive</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://editor.p5js.org">P5JS</a></li>
-            <li class="fadein-white p-halfx-1y fs-20"><a href="https://soundcloud.com">Soundcloud</a></li>
+        <ol class="list">
+            <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
+            <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
+            <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
+            <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
+            <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
+            <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
+            <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
+            <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
         </ol>
     </div>
-
 </body>
 
+<script src="./unsplashBackground.js"></script>
+
 </html>
-
-<script>
-    let bg = document.getElementById("bg");
-    let imgUrl = `https://picsum.photos/${window.innerWidth}/${window.innerHeight}`;
-    bg.src = imgUrl;
-    let img;
-    let src = "";
-
-    getUnsplash();
-    
-    window.onresize = resizeBgImg;
-
-    function getUnsplash() {
-        let response;
-        let max = 375;  //manually or automatically update this later
-        let page = Math.floor(Math.random() * max);
-
-        fetch("https://api.unsplash.com/search/photos?query=Hokkaido&&per_page=1&&page=" + page, { headers: { "Authorization": "Client-ID v2K5H9978Yf62yTnDUgd85buy13X1ajy0BpbjGVbDg0" } })
-            .then(response => response.json())
-            .then(data => {              
-                img = data.results[0];
-                imgUrl = img.urls.raw;
-                resizeBgImg();
-            });
-    }
-
-    function resizeBgImg() {
-        src = `${imgUrl}`;
-        if (img.width > window.innerWidth) src = `${imgUrl}&w=${window.innerWidth}`;
-        if (img.height > window.innerHeight) src = `${imgUrl}&h=${window.innerHeight}`;
-
-        bg.src = src;
-    }
-
-</script>
