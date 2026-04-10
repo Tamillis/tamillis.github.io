@@ -4,7 +4,7 @@
     --color-text-dark: hsl(40, 3%, 20%);
     --box-shadow-color: #2222227c;
     --border-radius: 0.666rem;
-    
+
     --color-border-primary: lightgrey;
     --color-border-secondary: rgb(63, 63, 63);
     --color-border-tertiary: darkslategrey;
@@ -23,13 +23,17 @@ html,
 body {
     font-family: system-ui, sans-serif;
     color: var(--color-text);
+
     min-height: 100vh;
     min-width: 100vw;
-    box-shadow: 0px 0px 25px 25px rgba(0, 0, 0, 0.25) inset;
+    overflow-x: hidden;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    box-shadow: 0px 0px 25px 25px rgba(0, 0, 0, 0.25) inset;
     background-color: black;
     background-position: center;
     background-repeat: no-repeat;
@@ -81,8 +85,14 @@ textarea::placeholder {
 
 .list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     font-size: 1em;
+}
+
+@media (min-width: 1200px) {
+    .list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 
 .list-item,
