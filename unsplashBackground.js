@@ -49,6 +49,10 @@
                     console.warn("No results found: ", data);
                     applyBackground("https://picsum.photos/2000");
                 }
+            })
+            .catch(err => {
+                    console.warn("Error encountered: ", err);
+                    applyBackground("https://picsum.photos/2000");
             });
     }
 
@@ -57,8 +61,14 @@
     }
 
     function showRemaining(remaining) {
-        let span = document.createElement("span");
-        span.classList.add("bottom-left");
+        let span = document.getElementById("remaining-span");
+
+        if(!span) {
+            span = document.createElement("span");
+            span.id = "remaining-span";
+            span.classList.add("bottom-left");
+            document.body.appendChild(span);
+        }
+
         span.innerText = remaining;
-        document.body.appendChild(span);
     }
