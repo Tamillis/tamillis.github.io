@@ -1,0 +1,29 @@
+{
+  "type": "MONSTER",
+  "onsets": ["Gr", "G", "Gh", "Kr", "K", "Kh", "", "Br", "Bl", "Dr", "Tr", "Z", "Sk", "Sn", "R", "Vr", "Vl"],
+  "nuclei": ["a", "la", "lu", "li", "ra", "ru", "ri", "o", "'", "u", "i", "e", "aa", "oo", "uu"],
+  "codas": ["g", "k", "t", "d", "sh", "z", "zz", "kk", "rg", "rk", "nk", "ng", "sk", "ch", "th"],
+
+  "givenEndings": {
+    "Male": ["", "", "", "", "g", "uk", "og", "rak", "mok", "snag", "gash", " 'the favoured'", " 'the tolerated'", " 'the disowned'"],
+    "Female": ["", "is", "sha", "azza", "ngra", "nka", "misha", " 'the favoured'", " 'the tolerated'", " 'the disowned'"],
+    "Other": ["", "", "ig", "ak", "ish", "ug", "ok", "za", "-thing", " 'the favoured'", " 'the tolerated'", " 'the disowned'"]
+  },
+
+  "family": {
+    "compoundChance": 0.45,
+    "familySuffixes": ["skull", "eye", "bone", "tooth", "fang", "claw", "gutter", "sneak", "stab", "bash", "rot", "mud", "muck", "lacky", "tripe", "serf", "hole", "stain"],
+    "clanStarts": ["Blood", "Rot", "Mud", "Skull", "Tooth", "Wart", "War", "Battle", "Snot", "Ash", "Bog", "Gut", "Dark", "Shadow", "Ill", "Omen", "Fate", "Reek", "Kill", "Masters", "Squat"],
+    "clanEnds": ["fang", "tooth", "chewer", "stomper", "cutter", "stabber", "basher", "lurker", "snout", "skinner", "thief", "sneak", "scum", "shrieker", "hound", "thing", "shadow", "blood"]
+  },
+
+  "weights": { "syllables": [4, 3, 1] },
+  "onsetChance": 0.95,
+  "codaChance": 0.85,
+  "endingChance": 0.33,
+
+  "cleanup": {
+    "collapseVowels": "([aei])\\1|([ou])\\2{2,}",
+    "collapseConsonants": "([cfghljmnpstvwxyzr])\\1|([bdkq])\\2{2,}"
+  }
+}

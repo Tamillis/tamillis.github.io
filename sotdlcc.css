@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Perpetua', serif;
+    font-size: 1rem;
+    color: antiquewhite;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem;
+    height: 100vh;
+
+    background-color: black;
+}
+
+li {
+    list-style-type: "- ";
+}
+
+h1,
+h2 {
+    font-family: "UnifrakturMaguntia", cursive;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+div {
+    width: 100%;
+}
+
+button {
+    background-color: antiquewhite;
+    color: black;
+    border-radius: 0px;
+    border: 1px solid black;
+    padding: 2px 1rem;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateY(2px) scale(97.5%);
+}
+
+input,
+select,
+option {
+    background-color: antiquewhite;
+    color: black;
+    width: fit-content;
+}
+
+table,
+td,
+th {
+    border: 1px solid antiquewhite;
+    border-collapse: collapse;
+    padding: 0.5rem;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 80vw;
+    max-width: 860px;
+    padding: 0 3rem;
+    gap: 1rem;
+}
+
+.grow-1 {
+    flex-grow: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.label {
+    font-weight: bold;
+    width: 75px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.5rem;
+    text-transform: capitalize;
+    text-overflow: clip;
+    overflow: hidden;
+}
+
+.input {
+    flex-grow: 1;
+    max-width: 250px;
+    text-indent: 1rem;
+}
+
+.input:active,
+.input:focus,
+.input:focus-visible {
+    border: revert;
+    outline: none;
+}
+
+.select {
+    height: 1.5rem;
+    text-align: center;
+}
+
+.select option {
+    height: 1rem;
+    padding: 0px;
+    margin: 0px;
+    color: black;
+}
+
+.input-group {
+    padding-bottom: 0.5rem;
+    width: 100%;
+    display: flex;
+}
+
+.lock {
+    position: absolute;
+    right: calc(100% + 0.5rem);
+    width: fit-content;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lock-container {
+    position: relative;
+}
+
+.two-col>* {
+    width: 50%;
+}
+
+.three-col>* {
+    width: calc(33.3% - 1rem);
+}

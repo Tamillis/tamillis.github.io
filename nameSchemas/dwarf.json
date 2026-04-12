@@ -1,0 +1,29 @@
+{
+  "type": "DWARF",
+  "onsets": ["B","Bal","Br","D","Dor","Dr","F","Fr","G","Gl","Gr","K","Kh","Kr","M","N","R","Sk","Th","Thr","T","Z","Zh"],
+  "nuclei": ["a","o","u","i","e","au","oi","û","â","ô"],
+  "codas": ["n","r","k","m","d","g","th","nd","rn","rk","gr","dr","ng","lm","gn","sk"],
+
+  "givenEndings": {
+    "Male": ["in","or","ur","ain","mir","rak","grim","drin"],
+    "Female": ["dis","lin","wen","rin","ith","eth","gret"],
+    "Other": ["in","ar","um","eth","ain","rak"]
+  },
+
+  "family": {
+    "compoundChance": 0.55,
+    "familySuffixes": ["sson","son","sdottir","dottir","stone","iron","gold","axe","forge","delver","brow","beard", "brew", "kiln"],
+    "clanStarts": ["Stone","Iron","Gold","Oak","Deep","Fire","Rune","Hammer","Anvil","Mithril", "Hark", "Ur", "Gem", "Draak", "Under"],
+    "clanEnds": ["beard","brow","fist","shield","heart","helm","hand","delver","seeker","forge", "heart", "chest", "brew", "grudge", "end"]
+  },
+
+  "weights": { "syllables": [1,4,2] },
+  "onsetChance": 0.95,
+  "codaChance": 0.75,
+  "endingChance": 0.6,
+
+  "cleanup": {
+    "collapseVowels": "([aâôû])\\1+",
+    "collapseConsonants": "([bcdfghjklmnpqrstvwxyz])\\1+"
+  }
+}

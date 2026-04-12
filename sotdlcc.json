@@ -1,0 +1,1348 @@
+{
+    "attributes": [
+        "strength",
+        "agility",
+        "intellect",
+        "will"
+    ],
+    "characteristics": [
+        "perception",
+        "defence",
+        "health",
+        "healing_rate",
+        "size",
+        "speed",
+        "power",
+        "damage",
+        "insanity",
+        "corruption",
+        "languagesAndProfessions"
+    ],
+    "ancestries": [
+        "changeling",
+        "clockwork",
+        "dwarf",
+        "goblin",
+        "human",
+        "orc"
+    ],
+    "human": {
+        "attributes": {
+            "strength": 10,
+            "agility": 10,
+            "intellect": 10,
+            "will": 10
+        },
+        "perceptionChange": 0,
+        "sizes": [
+            "1/2",
+            "1"
+        ],
+        "speed": 10,
+        "power": 0,
+        "talents": [
+            {
+                "level": 0,
+                "name": "Adaptability",
+                "description": "You can increase any Attribute of your choice by 1.",
+                "effect": "AA+1"
+            },
+            {
+                "level": 0,
+                "name": "Additional Language or Profession",
+                "description": "You can either speak one additional language or add a random profession.",
+                "effect": "LANG_OR_PROF"
+            }
+        ],
+        "immune": "",
+        "languagesAndProfessions": "You speak the Common Tongue.",
+        "ages": [
+            {
+                "age": "You are a child, 11 years old or younger.",
+                "value": 3
+            },
+            {
+                "age": "You are an adolescent, 12 to 17 years old.",
+                "value": 7
+            },
+            {
+                "age": "You are a young adult, 18 to 35 years old.",
+                "value": 12
+            },
+            {
+                "age": "You are a middle-aged adult, 36 to 55 years old.",
+                "value": 15
+            },
+            {
+                "age": "You are an older adult, 56 to 75 years old.",
+                "value": 17
+            },
+            {
+                "age": "You are a venerable adult, 76 years old or older.",
+                "value": 18
+            }
+        ],
+        "backgrounds": [
+            {
+                "background": "You died and returned to life. Start the game with 1d6 insanity.",
+                "effect": "INSANITY+1D6"
+            },
+            {
+                "background": "You were briefly possessed by a demon. Start the game with 1 Corruption.",
+                "effect": "CORRUPTION+1"
+            },
+            {
+                "background": "You spent 1D6 years as a prisoner in a dungeon.",
+                "effect": ""
+            },
+            {
+                "background": "You murdered someone in cold blood. Start the game with 1 Corruption.",
+                "effect": "CORRUPTION+1"
+            },
+            {
+                "background": "You caught and recovered from a terrible disease.",
+                "effect": ""
+            },
+            {
+                "background": "You belonged to a strange cult and saw many strange things. Start the game with 1 Insanity.",
+                "effect": "INSANITY+1"
+            },
+            {
+                "background": "The faerie held you prisoner for 1D20 years.",
+                "effect": ""
+            },
+            {
+                "background": "You lost a loved one and their loss haunts you still.",
+                "effect": ""
+            },
+            {
+                "background": "You lost a finger, a few teeth or an ear, or have gained a scar.",
+                "effect": ""
+            },
+            {
+                "background": "You earned a living working in your profession.",
+                "effect": ""
+            },
+            {
+                "background": "You fell in love and the relationship ended well or is ongoing.",
+                "effect": ""
+            },
+            {
+                "background": "You have a spouse and 1D6-2 children (minimum 0).",
+                "effect": ""
+            },
+            {
+                "background": "You travelled extensively. You speak one additional language.",
+                "effect": "LANG"
+            },
+            {
+                "background": "You received an education. You know how to read the Common Tongue.",
+                "effect": "READCOMMON"
+            },
+            {
+                "background": "You saved your town from terrible monsters.",
+                "effect": ""
+            },
+            {
+                "background": "You foiled a plot to kill someone important or you brought a killer to justice.",
+                "effect": ""
+            },
+            {
+                "background": "You performed a great deed and are a hero to the people in your hometown.",
+                "effect": ""
+            },
+            {
+                "background": "You found an old treasure map.",
+                "effect": ""
+            },
+            {
+                "background": "Someone important and powerful owes you a favour.",
+                "effect": ""
+            },
+            {
+                "background": "You came into money. Start the game with 2d6 cp.",
+                "effect": "CP+2D6"
+            }
+        ],
+        "personalities": [
+            {
+                "value": 3,
+                "personality": "You are cruel, wicked and self-serving. You enjoy making others suffer."
+            },
+            {
+                "value": 4,
+                "personality": "You are erratic and unpredictable. You have a hard time keeping your word and tend toward capricious behaviour."
+            },
+            {
+                "value": 6,
+                "personality": "Might makes right. Obedience to authority is the highest ideal."
+            },
+            {
+                "value": 8,
+                "personality": "You look after yourself first and foremost. You're not above double-crossing friends."
+            },
+            {
+                "value": 12,
+                "personality": "You put your interests and those of your friends above all else."
+            },
+            {
+                "value": 14,
+                "personality": "You help others because that is the right thing to do."
+            },
+            {
+                "value": 16,
+                "personality": "You try to do what you think is right, even if it breaks laws and social conventions."
+            },
+            {
+                "value": 17,
+                "personality": "Honour and duty guide everything you do."
+            },
+            {
+                "value": 18,
+                "personality": "You are commited to good and noble causes, and you never stray from your beliefs even if your insistance would cost you your life."
+            }
+        ],
+        "religions": [
+            {
+                "value": 3,
+                "religion": "You belong to a cult dedicated to a dark power."
+            },
+            {
+                "value": 4,
+                "religion": "You belong to a heretical sect."
+            },
+            {
+                "value": 6,
+                "religion": "You were raised in the teachings of witchcraft."
+            },
+            {
+                "value": 10,
+                "religion": "You follow the tenets of the Old Faith."
+            },
+            {
+                "value": 15,
+                "religion": "You belong to the Cult of the New God."
+            },
+            {
+                "value": 18,
+                "religion": "You have no religion."
+            }
+        ],
+        "builds": [
+            {
+                "value": 3,
+                "build": "You are short and thin."
+            },
+            {
+                "value": 4,
+                "build": "You are short and heavy."
+            },
+            {
+                "value": 6,
+                "build": "You are short."
+            },
+            {
+                "value": 8,
+                "build": "You are slender."
+            },
+            {
+                "value": 12,
+                "build": "You are average in height and weight."
+            },
+            {
+                "value": 14,
+                "build": "You are a bit overweight."
+            },
+            {
+                "value": 16,
+                "build": "You are tall."
+            },
+            {
+                "value": 17,
+                "build": "You are tall and thin."
+            },
+            {
+                "value": 18,
+                "build": "You are very tall and heavy."
+            }
+        ],
+        "appearances": [
+            {
+                "value": 3,
+                "appearance": "You are hideous. You look like a monster. Children cry when they encounter you, the weak of heart faint when they see you, and one person vomited after getting a good look at your face."
+            },
+            {
+                "value": 4,
+                "appearance": "You are ugly, and people find your visage unpleasant thanks to a scar, wen, beetling brows, boils, piles, a wandering or weeping eye, or something else of a similar magnitude."
+            },
+            {
+                "value": 6,
+                "appearance": "Most consider you homely: not quite ugly, but a bit worse than plain."
+            },
+            {
+                "value": 8,
+                "appearance": "You are plain and uninteresting to look upon. People notice you, but your appearance fails to make an impression."
+            },
+            {
+                "value": 12,
+                "appearance": "You are a perfectly average in appearance. You look like everyone else."
+            },
+            {
+                "value": 14,
+                "appearance": "You have a physical quality that makes you attractive to others. You might have pretty eyes, lips, hair, shape, or something else."
+            },
+            {
+                "value": 16,
+                "appearance": "You have several attractive physical qualities that make you quite comely."
+            },
+            {
+                "value": 17,
+                "appearance": "You are one of the great beauties in the land, an individual of almost unsurpassed form and appearance. People notice you."
+            },
+            {
+                "value": 18,
+                "appearance": "You put beautiful people to shame. You are so striking, heads turn to follow you wherever you go. People become infatuated with you, stumbling over their words and feeling flustered when you show them attention. There's a fine line between love and hate. Should you spurn the attentions of people you enamour, their affection might sour to resentment and even hatred."
+            }
+        ]
+    },
+    "dwarf": {
+        "attributes": {
+            "strength": 10,
+            "agility": 9,
+            "intellect": 10,
+            "will": 10
+        },
+        "perceptionChange": 1,
+        "sizes": [
+            "1/2"
+        ],
+        "health": 14,
+        "speed": 8,
+        "power": 0,
+        "talents": [
+            {
+                "level": 0,
+                "name": "Darksight",
+                "description": "You can see in areas obscured by shadows or darkness within medium range as if those areas were lit. Beyond this distance, you treat darkness as shadows and shadows as lit.",
+                "effect": ""
+            },
+            {
+                "level": 0,
+                "name": "Hated Creature",
+                "description": "Choose a creature from the Hatred table. Your hatred grants 1 boon on attack rolls made against creatures you hate.",
+                "effect": ""
+            },
+            {
+                "level": 0,
+                "name": "Robust Constitution",
+                "description": "You take half damage from poison. You make challenge rolls with 1 boon to avoid or remove the poisoned affliction.",
+                "effect": ""
+            }
+        ],
+        "immune": "",
+        "languagesAndProfessions": "You speak the Common Tongue, and you can speak, read, and write Dwarfish.",
+        "ages": [
+            {
+                "age": "You are a child, 20 years old or younger.",
+                "value": 3
+            },
+            {
+                "age": "You are an adolescent, 20 to 30 years old.",
+                "value": 7
+            },
+            {
+                "age": "You are a young adult, 31 to 50 years old.",
+                "value": 12
+            },
+            {
+                "age": "You are a middle-aged adult, 51 to 100 years old.",
+                "value": 15
+            },
+            {
+                "age": "You are an older adult, 101 to 150 years old.",
+                "value": 17
+            },
+            {
+                "age": "You are a venerable adult, 151 years old or older.",
+                "value": 18
+            }
+        ],
+        "backgrounds": [
+            {
+                "background": "You sold your soul to a devil to gain wealth. The devil betrayed you and left you penniless. You start the game with 1 Corruption",
+                "effect": "CORRUPTION+1"
+            },
+            {
+                "background": "Your ancestors appeared to you in a vision adn sent you to recover a fabled relic.",
+                "effect": ""
+            },
+            {
+                "background": "You accidentally killed someone close to you.",
+                "effect": ""
+            },
+            {
+                "background": "You stole gold from a rival clan and the theft shames you.",
+                "effect": ""
+            },
+            {
+                "background": "You fought against the creatures you hate and lost.",
+                "effect": ""
+            },
+            {
+                "background": "You brought shame to yourself and your clan. You live as an exile, searching for redemption, even if that redemption comes with a glorious death.",
+                "effect": ""
+            },
+            {
+                "background": "You were taken prisoner by the creatures you hate. You lived as a slave for 2D6 years.",
+                "effect": ""
+            },
+            {
+                "background": "The creatures you hate overran your home and wiped out your clan.",
+                "effect": ""
+            },
+            {
+                "background": "You survived a cave-in and get a bit nervous when underground.",
+                "effect": ""
+            },
+            {
+                "background": "You earned a living working in your profession.",
+                "effect": ""
+            },
+            {
+                "background": "You are a sworn servant of the Dwarf King.",
+                "effect": ""
+            },
+            {
+                "background": "You are a gifted artisan. Add artisan (any one) to your list of professions",
+                "effect": "ARTISAN"
+            },
+            {
+                "background": "You travelled extensively. You speak one additional language.",
+                "effect": "LANG"
+            },
+            {
+                "background": "You inherited a battleaxe or a warhammer from an ancestor.",
+                "effect": "BATTLEAXE_OR_WARHAMMER"
+            },
+            {
+                "background": "You discovered a vein of gold under your mountain home.",
+                "effect": ""
+            },
+            {
+                "background": "You hunted down and helped kill a creature you hate.",
+                "effect": ""
+            },
+            {
+                "background": "You performed a great deed and are a hero to your clan.",
+                "effect": ""
+            },
+            {
+                "background": "You have a key to an ancient treasure vault lost to the dwarfs long ago.",
+                "effect": ""
+            },
+            {
+                "background": "You are the rightful heir to a stronghold overrun by the enemies of you people.",
+                "effect": ""
+            },
+            {
+                "background": "You came into money. Start the game with 2d6 cp.",
+                "effect": "CP+2D6"
+            }
+        ],
+        "personalities": [
+            {
+                "value": 3,
+                "personality": "Your hatred is a living thing. It drives you, gives you strength, and helps you triumph over your enemies."
+            },
+            {
+                "value": 4,
+                "personality": "You seek a glorious death killing your enemies."
+            },
+            {
+                "value": 6,
+                "personality": "You love gold more than anything. You love the way it fells, the sound it makes, and the taste of it."
+            },
+            {
+                "value": 8,
+                "personality": "You believe other people covet your wealth. It is your duty to protect what is yours - at any cost."
+            },
+            {
+                "value": 12,
+                "personality": "Your honour is your life. You would never do anything to bring shame to your people."
+            },
+            {
+                "value": 14,
+                "personality": "You surrender to the will of your ancestors, the customs of your people, and the good of all."
+            },
+            {
+                "value": 16,
+                "personality": "You believe your people must rise above their greed and suspicion. In these dark times, you must band together to overcome the doom that awaits you all."
+            },
+            {
+                "value": 17,
+                "personality": "You don't trust or like non-dwarfs, but they have their uses."
+            },
+            {
+                "value": 18,
+                "personality": "You have little use for the customs of your people. It's time to move past the dusty caves and seek out fortunes elsewhere."
+            }
+        ],
+        "hatreds": [
+            "Ogres",
+            "Troglodytes",
+            "Beastmen",
+            "Orcs",
+            "Goblins",
+            "Elves",
+            "Trolls",
+            "Giants",
+            "Dragons",
+            "Demons"
+        ],
+        "builds": [
+            {
+                "value": 3,
+                "build": "You are short and scrawny."
+            },
+            {
+                "value": 6,
+                "build": "You are short and fat."
+            },
+            {
+                "value": 8,
+                "build": "You astand a bit shorter than other dwarfs."
+            },
+            {
+                "value": 12,
+                "build": "You are average in height and build."
+            },
+            {
+                "value": 15,
+                "build": "You have a magnificent belly."
+            },
+            {
+                "value": 17,
+                "build": "You are tall."
+            },
+            {
+                "value": 18,
+                "build": "You are tall and heavy."
+            }
+        ],
+        "appearances": [
+            {
+                "value": 4,
+                "appearance": "You have a monstrous appearance, likely due to hard living and several near misses. Your face is a mass of scar tissue, probably missing an ear, an eye or your nose. You also display some unusual habit, such as pounding nails into your skull or greasing your body with troll fat."
+            },
+            {
+                "value": 6,
+                "appearance": "You have several interesting features that work together to make you one ugly brute. Filth from digging in the dirt, mites infesting your hair, skin lashed with healing scares, and a rich aroma of vomit - all these contribute to your distinctive style."
+            },
+            {
+                "value": 8,
+                "appearance": "You are hairy, portly, and grubby."
+            },
+            {
+                "value": 11,
+                "appearance": "You are a typical dwarf, hairy and portly, but well groomed."
+            },
+            {
+                "value": 15,
+                "appearance": "You take pride in your appearance. You stay clean, oil your facial hair, and perhaps braid it or tie it with metal rings."
+            },
+            {
+                "value": 18,
+                "appearance": "You are quite fetching for a dwarf. YOu have regal features, good bearing, and a deep voice. You take pride in your appearance."
+            }
+        ]
+    },
+    "clockwork": {
+        "attributes": {
+            "strength": 9,
+            "agility": 8,
+            "intellect": 9,
+            "will": 9
+        },
+        "defence": 13,
+        "perceptionChange": 0,
+        "sizes": 1,
+        "speed": 8,
+        "power": 0,
+        "talents": [
+            {
+                "level": 0,
+                "name": "Key",
+                "description": "You have a key somewhere on your body that you cannot reach. When the key is turning, you are a creature with your normal statistics. When the key is stopped, you use the statistics of your Object Form. Your key stops turning when you become incapacitated or at the end of any round where you get a 0 or less on an attack or challenge roll. Track your Object and Creature Health separately, carrying over damage when incapacitated.",
+                "effect": ""
+            },
+            {
+                "level": 0,
+                "name": "Mechanical Body",
+                "description": "You do not eat, drink or breathe. You do not age and you cannot be transformed into an undead creature. Your mechanical body makes it impossible for you to swim; you sink.",
+                "effect": ""
+            }
+        ],
+        "immune": "Damage from disease and poison; asleep, diseased, fatigued, poisoned.",
+        "languagesAndProfessions": "You speak the Common Tongue.",
+        "backgrounds": [
+            {
+                "background": "Your soul came from Hell. Start the game with 1d3 Corruption.",
+                "effect": "CORRUPTION+1D3"
+            },
+            {
+                "background": "Your soul was plucked from the Underworld before it could forget its former life. Start the game with 1d6 Insanity and add an extra profession",
+                "effects": [
+                    "INSANITY+1D6",
+                    "PROF"
+                ]
+            },
+            {
+                "background": "You spent 1D20 years in a dormant state.",
+                "effects": []
+            },
+            {
+                "background": "Your maker treated you poorly. You escaped and now fear your maker will find you.",
+                "effects": []
+            },
+            {
+                "background": "Fire, plague, or monsters destroyed your home and you are the sole survivor.",
+                "effects": []
+            },
+            {
+                "background": "You were stolen from the workshop where you were made and and lived as a slave for 1D6 years.",
+                "effects": []
+            },
+            {
+                "background": "Goblins captured you and almost took you apart for scrap materials. You have replaced your missing components with bits of wood, old weapons, and other rubbish.",
+                "effects": []
+            },
+            {
+                "background": "You were left to find your own way when your maker died.",
+                "effects": []
+            },
+            {
+                "background": "You fell off a boat and spent 2 years walking to shore.",
+                "effects": []
+            },
+            {
+                "background": "You worked to fulfill your purpose for 1d6 years.",
+                "effects": []
+            },
+            {
+                "background": "Choose a member of your group. That character found you and turned your key. You owe that character a debt.",
+                "effects": []
+            },
+            {
+                "background": "You were one of 1D6 other clockworks made at the same time. You hope to find them one day.",
+                "effects": []
+            },
+            {
+                "background": "You were made to be a translator. You speak one additional language.",
+                "effects": ["LANG"]
+            },
+            {
+                "background": "You were made to be a scribe. You know how to read and write the Common Tongue.",
+                "effects": ["READCOMMON"]
+            },
+            {
+                "background": "Your maker set you free to find your destiny.",
+                "effects": []
+            },
+            {
+                "background": "You can't remember your past. You don't know where you came from or how you came to be where you are.",
+                "effects": []
+            },
+            {
+                "background": "You built a lasting monument in your community.",
+                "effects": []
+            },
+            {
+                "background": "You found a cryptic message inside your body. You have not yet deciphered its meaning.",
+                "effects": []
+            },
+            {
+                "background": "You have a sword grafted to one of your arms.",
+                "effects": []
+            },
+            {
+                "background": "You came into money. Start the game with 2d6 cp.",
+                "effects": ["CP+2D6"]
+            }
+        ],
+        "personalities": [
+            {
+                "value": 3,
+                "personality": "You hate living things and take pleasure in pulling things apart."
+            },
+            {
+                "value": 4,
+                "personality": "You are terrified of becoming dormant."
+            },
+            {
+                "value": 7,
+                "personality": "Your body gives you power and strength. You use it to enforce your will on others."
+            },
+            {
+                "value": 8,
+                "personality": "You didn't ask for this existence, but you make the most of it while you have it."
+            },
+            {
+                "value": 13,
+                "personality": "You search for meaning in a world in which you have no place."
+            },
+            {
+                "value": 14,
+                "personality": "You were made to serve. You commit your existence to aiding others."
+            },
+            {
+                "value": 15,
+                "personality": "You don't know how you fit into this world, but you will spend your life trying to find out."
+            },
+            {
+                "value": 17,
+                "personality": "You obey the instructions of anyone you deem to be an authority."
+            },
+            {
+                "value": 18,
+                "personality": "Your maker gave you three commandments and you must obey them."
+            }
+        ],
+        "ages": [
+            {
+                "age": "You are new, 5 years old or younger.",
+                "value": 8
+            },
+            {
+                "age": "You are experienced, 6 to 10 years old.",
+                "value": 12
+            },
+            {
+                "age": "You are old, 11 to 50 years old.",
+                "value": 15
+            },
+            {
+                "age": "You are very old, 51 to 150 years old.",
+                "value": 17
+            },
+            {
+                "age": "You are ancient, more than 150 years old.",
+                "value": 18
+            }
+        ],
+        "purposes": [
+            {
+                "purpose": "You were built for war. Increase your Strength or Agility by 2.",
+                "effect": "AGILITY+2_OR_STRENGTH+2"
+            },
+            {
+                "purpose": "You were built to work. Increase your Strength by 2.",
+                "effect": "STRENGTH+2"
+            },
+            {
+                "purpose": "You were built to use magic. Increase your Intellect or Will by 2.",
+                "effect": "INTELLECT+2_OR_WILL+2"
+            },
+            {
+                "purpose": "You were built to gather intelligence or assassinate targets. Increase your Agility or Intellect by 2.",
+                "effect": "AGILITY+2_OR_INTELLECT+2"
+            },
+            {
+                "purpose": "You were built for an inexplicable purpose. Increase one attribute of your choice by 2.",
+                "effect": "AA+2"
+            }
+        ],
+        "forms": [
+            {
+                "value": 3,
+                "form": "You are a small winged clockwork. Reduce your Health by 5 and your Size to 1/2. You can fly, but you must land at the end of your movement or fall. You are 3 feet tall and weigh 50 pounds.",
+                "effects": [
+                    "HEALTH-5",
+                    "SIZE_0.5"
+                ]
+            },
+            {
+                "value": 5,
+                "form": "You are a small spider-like clockwork with two functional hands. Your size is 1/2. You ignore the effects of difficult terrain when you climb. You are 3 feet tall and weigh 50 pounds.",
+                "effects": [
+                    "SIZE_0.5"
+                ]
+            },
+            {
+                "value": 9,
+                "form": "You are a Small humanoid clockwork. Your Size is 1/2. You are 4ft tall and weigh 75 pounds.",
+                "effects": [
+                    "SIZE_0.5"
+                ]
+            },
+            {
+                "value": 15,
+                "form": "You are a humanoid clockwork. You are 6ft tall and weigh 300 pounds.",
+                "effects": [
+                    "SIZE_1"
+                ]
+            },
+            {
+                "value": 17,
+                "form": "You are a large humanoid clockwork. Increase your Size to 2, but reduce your Speed and your Defence by 2. You are 10ft tall and weigh 750 pounds",
+                "effects": [
+                    "SIZE_2",
+                    "SPEED-2",
+                    "DEFENCE-2"
+                ]
+            },
+            {
+                "value": 18,
+                "form": "You are a large clockwork with the lower body of a horse. Increase your Size to 2 and your speed by 2. Reduce your Defence by 3. You are 6ft long, 6ft tall, and weigh 750 pounds.",
+                "effects": [
+                    "SPEED+2",
+                    "SIZE_2",
+                    "DEFENCE-3"
+                ]
+            }
+        ],
+        "appearances": [
+            {
+                "value": 3,
+                "appearance": "You have a strange and unsettling appearance."
+            },
+            {
+                "value": 4,
+                "appearance": "You appear crude and ill-formed."
+            },
+            {
+                "value": 6,
+                "appearance": "You appear battered, broken, and in poor repair."
+            },
+            {
+                "value": 8,
+                "appearance": "You have no facial features or distinguishing markings."
+            },
+            {
+                "value": 12,
+                "appearance": "You have a meer suggestion of facial features."
+            },
+            {
+                "value": 14,
+                "appearance": "You appear well made and in good working condition."
+            },
+            {
+                "value": 16,
+                "appearance": "You have a stylized and ornate body."
+            },
+            {
+                "value": 17,
+                "appearance": "You have an ornate body festooned with etchings and ornamental jewels."
+            },
+            {
+                "value": 18,
+                "appearance": "You have an exquisite body festooned with elaborate etchings and ornamental jewels, and trimmed in precious metals. If you are dismantled, your body parts are worth 1d6 gc."
+            }
+        ]
+    },
+    "professions": {
+        "Academic": [
+            "Architecture",
+            "Astrology",
+            "Engineering",
+            "Etiquette & customs",
+            "Folklore",
+            "Geography",
+            "Heraldry",
+            "History",
+            "Law",
+            "Literature",
+            "Magic",
+            "Medicine",
+            "Navigation",
+            "Occult",
+            "Philosophy",
+            "Politics",
+            "Nature",
+            "Religion",
+            "Science",
+            "War"
+        ],
+        "Common": [
+            "Animal Trainer",
+            "Apothecary",
+            "Healer",
+            "Baker",
+            "Blacksmith",
+            "Bookbinder",
+            "Brewer",
+            "Carpenter",
+            "Chandler",
+            "Cobbler",
+            "Dyer",
+            "Glassblower",
+            "Jeweler",
+            "Leatherworker",
+            "Mason",
+            "Potter",
+            "Printer",
+            "Tailor",
+            "Painter",
+            "Poet",
+            "Sculptor",
+            "Writer",
+            "Boatman",
+            "Ferryman",
+            "Butcher",
+            "Cook",
+            "Drover",
+            "Herder",
+            "Actor",
+            "Athlete",
+            "Comedian",
+            "Courtesan",
+            "Dancer",
+            "Orator",
+            "Puppeteer",
+            "Singer",
+            "Storyteller",
+            "Farmer",
+            "Fisher",
+            "Whaler",
+            "Groom",
+            "Chimneysweep",
+            "Gravedigger",
+            "Porter",
+            "Stevedore",
+            "Street-sweeper",
+            "Arms Dealer",
+            "Grain Merchant",
+            "Livestock Trader",
+            "Slaver",
+            "Spice Runner",
+            "Textile Merchant",
+            "Miner",
+            "Musician",
+            "Sailor",
+            "Servant",
+            "Valet",
+            "Shopkeeper",
+            "Teamster"
+        ],
+        "Criminal": [
+            "Agitator",
+            "Beggar",
+            "Burglar",
+            "Carouser",
+            "Rake",
+            "Charlatan",
+            "Confidence Artist",
+            "Cultist",
+            "Fence",
+            "Gambler",
+            "Grave robber",
+            "Informant",
+            "Murderer",
+            "Pickpocket",
+            "Pirate",
+            "Prostitute",
+            "Rebel",
+            "Terrorist",
+            "Saboteur",
+            "Spy",
+            "Thug",
+            "Urchin"
+        ],
+        "Martial": [
+            "Constable",
+            "Detective",
+            "City Guard",
+            "Lone Guard",
+            "Jailer",
+            "Officer",
+            "Marine",
+            "Mercenary",
+            "Militiaman",
+            "Militia Officer",
+            "Patroller",
+            "Skirmisher",
+            "Conscirpt",
+            "Peasant Levy",
+            "Pressganged Seaman",
+            "Slave",
+            "Soldier",
+            "Sergeant",
+            "Squire",
+            "Interrogator"
+        ],
+        "Religious": [
+            "Devotee",
+            "Evangelist",
+            "Fanatic",
+            "Heretic",
+            "Initiate of the Old Faith",
+            "Minister",
+            "Acolyte of the New God",
+            "Inquisitor's Henchman",
+            "Pilgrim",
+            "Street Preacher",
+            "Temple Ward"
+        ],
+        "Wilderness": [
+            "Bandit",
+            "Brigand",
+            "Highway Robber",
+            "Barbarian",
+            "Gatherer",
+            "Guide",
+            "Interpreter",
+            "Hermit",
+            "Game Hunter",
+            "Herbalist",
+            "Nomad",
+            "Vagabond",
+            "Pioneer",
+            "Poacher",
+            "Rustler",
+            "Prospector",
+            "Outlaw",
+            "Refugee",
+            "Immigrant",
+            "Spelunker",
+            "Tracker",
+            "Trapper",
+            "Woodcutter"
+        ]
+    },
+    "equipment": [
+        {
+            "value": 4,
+            "wealth": "Destitute",
+            "description": "You are penniless and live on the streets.",
+            "equipment": [
+                "a club or sling with 20 stones",
+                "rags",
+                "a pouch containing 1d6 bits"
+            ]
+        },
+        {
+            "value": 8,
+            "wealth": "Poor",
+            "description": "You live in squalid conditions and you're never sure where you're going to get your next meal.",
+            "equipment": [
+                "a staff or a club or sling with 20 stones",
+                "patched basic clothing",
+                "a sack",
+                "bread",
+                "a waterskin", 
+                "a tinderbox",
+                "a candle",
+                "a pouch containing 2d6 bits"
+            ]
+        },
+        {
+            "value": 13,
+            "wealth": "Getting By",
+            "description": "You earn enough to meet all your expenses.",
+            "equipment": [
+                "a dagger",
+                "a staff or a club or sling with 20 stones",
+                "basic clothing",
+                "a backpack",
+                "a week of rations",
+                "a waterskin", 
+                "a tinderbox",
+                "2 torches",
+                "a pouch containing 1d6 cp"
+            ]
+        },
+        {
+            "value": 16,
+            "wealth": "Comfortable",
+            "description": "You live well and make enough to that you can save a little.",
+            "equipment": [
+                "a dagger",
+                "a staff or a club or sling with 20 stones",
+                "fine clothing",
+                "a backpack",
+                "a cloak",
+                "a week of rations",
+                "a waterskin", 
+                "a coil of rope",
+                "a tinderbox",
+                "2 torches",
+                "a healing potion",
+                "a pouch containing 2d6 cp",
+                "a shield or a rank 0 spell scroll or a healers / tool / writing kit"
+            ]
+        },
+        {
+            "value": 17,
+            "wealth": "Wealthy",
+            "description": "You live very well. You have nice clothes and fine accomodations, and you have probably not gone without for a long time.",
+            "equipment": [
+                "a dagger",
+                "courtier's clothing",
+                "a cloak",
+                "a backpack",
+                "a week of rations",
+                "a waterskin", 
+                "a coil of rope",
+                "a tinderbox",
+                "a lantern",
+                "2 flasks of oil",
+                "a healing potion",
+                "a pouch containing 1d6 ss",
+                "a shield or a rank 0 spell scroll or a healers / tool / writing kit"
+            ]
+        },
+        {
+            "value": 18,
+            "wealth": "Rich",
+            "description": "You want for nothing. You likely come from a noble family, and you have servants and an estate, castle or house in the best part of town. Your fortunes earn you many friends and many enemies.",
+            "equipment": [
+                "a dagger",
+                "noble's clothing",
+                "a cloak",
+                "a backpack",
+                "a week of rations",
+                "a waterskin", 
+                "a healing potion",
+                "a pouch containing 2d6 ss",
+                "a personal servant",
+                "a guard",
+                "three horses with saddles"
+            ]
+        }
+    ],
+    "interestingThings": [],
+    "paths": {
+        "novice": [
+            {
+                "name": "Magician",
+                "level1": {
+                    "attributes": [
+                        "ANY+1, ANY+1"
+                    ],
+                    "characteristics": [
+                        "HEALTH+2",
+                        "POWER+1"
+                    ],
+                    "languagesAndProfessions": "You read all the languages you know how to speak. In addition, you add one academic area of knowledge of your choice.",
+                    "Magic": "You discover one tradition. Then, make three choices. For each choice, you either discover another tradition or learn a spell from a tradition you have discovered.",
+                    "Cantrip": "Whenever you discover a tradition, you learn an extra rank 0 spell from that tradition.",
+                    "SenseMagic": "You learn the *sense magic* spell."
+                }
+            },
+            {
+                "name": "Magician",
+                "attributes": [
+                    "ANY+1, ANY+1"
+                ],
+                "characteristics": [
+                    "HEALTH+2",
+                    "POWER+1"
+                ],
+                "languagesAndProfessions": "You read all the languages you know how to speak. In addition, you add one academic area of knowledge of your choice.",
+                "Magic": "You discover one tradition. Then, make three choices. For each choice, you either discover another tradition or learn a spell from a tradition you have discovered.",
+                "Cantrip": "Whenever you discover a tradition, you learn an extra rank 0 spell from that tradition.",
+                "SenseMagic": "You learn the *sense magic* spell."
+            }
+        ]
+    },
+    "traditions": [
+        {
+            "name": "Arcana",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Battle",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Conjuration",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Curse",
+            "attribute": "Intellect",
+            "darkMagic": true
+        },
+        {
+            "name": "Divination",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Enchantment",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Forbidden",
+            "attribute": "Intellect",
+            "darkMagic": true
+        },
+        {
+            "name": "Illusion",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Necromancy",
+            "attribute": "Intellect",
+            "darkMagic": true
+        },
+        {
+            "name": "Protection",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Rune",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Shadow",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Technomancy",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Teleportation",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Time",
+            "attribute": "Intellect"
+        },
+        {
+            "name": "Air",
+            "attribute": "Will"
+        },
+        {
+            "name": "Alteration",
+            "attribute": "Will"
+        },
+        {
+            "name": "Celestial",
+            "attribute": "Will"
+        },
+        {
+            "name": "Chaos",
+            "attribute": "Will"
+        },
+        {
+            "name": "Destruction",
+            "attribute": "Will"
+        },
+        {
+            "name": "Earth",
+            "attribute": "Will"
+        },
+        {
+            "name": "Fire",
+            "attribute": "Will"
+        },
+        {
+            "name": "Life",
+            "attribute": "Will"
+        },
+        {
+            "name": "Nature",
+            "attribute": "Will"
+        },
+        {
+            "name": "Primal",
+            "attribute": "Will"
+        },
+        {
+            "name": "Song",
+            "attribute": "Will"
+        },
+        {
+            "name": "Storm",
+            "attribute": "Will"
+        },
+        {
+            "name": "Theurgy",
+            "attribute": "Will"
+        },
+        {
+            "name": "Transformation",
+            "attribute": "Will"
+        },
+        {
+            "name": "Water",
+            "attribute": "Will"
+        }
+    ],
+    "spells": [
+        {
+            "name": "Magic Sense",
+            "tradition": "Magician",
+            "level": 0,
+            "area": "A sphere with a 5-yard radius centered on a point within your space.",
+            "description": "You know if there are any ongoing magical effects in the area and from what points they originate."
+        }
+    ],
+    "npc": {
+        "traitNouns": [
+            "an odd odor",
+            "a grubby-look",
+            "an oddly-shaped mouth",
+            "a strange colouration",
+            "lots of hair",
+            "little hair",
+            "a noticable limp",
+            "a nasty scar",
+            "nice clothing",
+            "bare feet",
+            "foul breath",
+            "an unseemly wen",
+            "a missing body part"
+        ],
+        "traitAdjectives": [
+            "wrinkled",
+            "attractive",
+            "ugly",
+            "perfumed",
+            "diseased",
+            "freckled",
+            "tattooed"
+        ],
+        "motivations": [
+            "adventure",
+            "atonement",
+            "chaos",
+            "glory",
+            "good",
+            "immortality",
+            "improvement",
+            "justice",
+            "knowledge",
+            "liberty",
+            "love",
+            "magic",
+            "order",
+            "peace",
+            "power",
+            "salvation",
+            "security",
+            "validation",
+            "vengeance",
+            "wealth"
+        ],
+        "personalities": [
+            "insane",
+            "wicked",
+            "cruel",
+            "loud",
+            "vulgar",
+            "ignoble",
+            "scheming",
+            "greedy",
+            "erratic",
+            "generous",
+            "honest",
+            "noble",
+            "genteel",
+            "quiet",
+            "benevolent",
+            "virtuous",
+            "focused"
+        ]
+    }
+}

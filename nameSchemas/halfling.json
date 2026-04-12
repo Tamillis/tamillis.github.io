@@ -1,0 +1,29 @@
+{
+  "type": "HALFLING",
+  "onsets": ["B","B","D","F","F","G","H","L", "L", "Ll", "M","P", "N", "Pl", "Pr","R","R","S","T","S","T","W", "Sw", "Tw", "K"],
+  "nuclei": ["a","e","i","o","u","a","e","i","o","u","ia","ee","ou", "y", "yy"],
+  "codas": ["n","l","m","s","t","d","rd", "rt","nt","ly"],
+
+  "givenEndings": {
+    "Male": ["", "", "", "-body","y","an","ard","wise","do"],
+    "Female": ["", "", "-mam","ie","y","ella","ina","rose"],
+    "Other": ["", "y","ie","o","en","lin"]
+  },
+
+  "family": {
+    "compoundChance": 0.6,
+    "familySuffixes": ["bottle","kettle","brush","foot","leaf","barrel","burrow","good", "body", "bad", "rind","garner", "bond", "heart", "felt", "norm", "shy", "caer"],
+    "clanStarts": ["Green", "Borown", "Blue","Hill", "Mount", "Gully","Apple", "Seed", "Bark", "Honey","Clover", "Spice","Sunny", "Sky","Under", "In","Tumble", "Trot", "Sing", "Weed", "Pipe", "Smoke", "Pony", "Billy", "Path"],
+    "clanEnds": ["hill","foot","burrow","barrel","bottle","leaf","brook","meadow", "barrow", "bend", "brook", "bridge", "ferry", "cheese", "wheel", "fast", "inn", "way", "stride", "clod", "vine", "grow", "caer", "fyl"]
+  },
+
+  "weights": { "syllables": [3,5,1] },
+  "onsetChance": 0.85,
+  "codaChance": 0.5,
+  "endingChance": 0.85,
+
+  "cleanup": {
+    "collapseVowels": "([au])\\1+|([eiyo])\\2{2,}",
+    "collapseConsonants": "([cdfghjkmqvwxy])\\1+|([blnptrs])\\2{2,}"
+  }
+}

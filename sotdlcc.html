@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SotDL Character Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./sotdlcc.css">
+    <script src="./utilities.js"></script>
+    <script type="module" src="./nameGenerator.js"></script>
+</head>
+
+<body>
+    <h1>Shadow of the Demon Lord</h1>
+    <h2>Character Creator</h2>
+
+    <div class="main">
+        <p>This is a comprehensive character creation tool using the rules as written in the core book, intended for use
+            for myself and others I play with, and perhaps you may find useful.</p>
+        <p>This is non-profit fan work; Shadow of the Demon Lord belongs to Robert Schwalb et al</p>
+    </div>
+
+    <hr />
+
+    <div id="main" class="main" class="hidden">
+        <div class="flex">
+            <button id="create-btn" onclick="randomise()">Randomise</button>
+        </div>
+
+        <h2>
+            <p id="npc"></p>
+        </h2>
+
+        <h2>TODO: Effects</h2>
+        <ul id="effects-ul"></ul>
+
+        <h2>Name</h2>
+        <div class="flex lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="name-lock">
+            </label>
+            <h3 id="char-name"></h3>
+        </div>
+        <div class="flex">
+            <select id="char-gender">
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+
+            <select id="char-name-schema">
+                <option value="HUMAN">Human</option>
+                <option value="ELF">Elven</option>
+                <option value="DWARF">Dwarven</option>
+                <option value="HALFLING">Gentle</option>
+                <option value="MONSTER">Monstrous</option>
+            </select>
+
+            <button onclick="newName()">&orarr;</button>
+        </div>
+
+        <h2>Ancestry</h2>
+
+        <div class="flex lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="ancestry-lock">
+            </label>
+            <select id="ancestries" class="select"></select>
+            <div class="grow-1"></div>
+        </div>
+
+        <h2>Ancestry Summary</h2>
+
+        <div class="flex lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="ancestry-summary-lock">
+            </label>
+            <div id="ancestry-summary"></div>
+        </div>
+
+        <h2>Attributes & Characteristics</h2>
+
+        <div class="lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="stats-lock">
+            </label>
+
+            <div class="flex three-col">
+                <div id="stats">
+                    <div class="input-group">
+                        <label for="strength" class="label">Strength</label>
+                        <input id="strength" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="agility" class="label">Agility</label>
+                        <input id="agility" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="intellect" class="label">Intellect</label>
+                        <input id="intellect" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="will" class="label">Will</label>
+                        <input id="will" type="number" placeholder="10" class="input" />
+                    </div>
+                </div>
+                <div id="characteristics">
+                    <div class="input-group">
+                        <label for="health" class="label">Health</label>
+                        <input id="health" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="defense" class="label">Defense</label>
+                        <input id="defense" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="perception" class="label">Perception</label>
+                        <input id="perception" type="number" placeholder="10" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="insanity" class="label">Insanity</label>
+                        <input id="insanity" type="number" placeholder="0" class="input" />
+                    </div>
+                </div>
+                <div>
+                    <div class="input-group">
+                        <label for="power" class="label">Power</label>
+                        <input id="power" type="number" placeholder="0" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="speed" class="label">Speed</label>
+                        <input id="speed" type="text" placeholder="1" class="input" />
+                    </div>
+                    <div class="input-group">
+                        <label for="size" class="label">Size</label>
+                        <select id="size" class="input">
+                            <option>1</option>
+                            <option>1 / 2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Languages & Professions</h2>
+        <div class="flex lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="professions-lock">
+            </label>
+            <div id="professions"></div>
+        </div>
+
+        <h2>Equipment</h2>
+        <div class="flex lock-container">
+            <label class="lock">
+                Lock:
+                <input type="checkbox" id="equipment-lock">
+            </label>
+            <div>
+                <p><strong id="equipment-wealth"></strong></p>
+                <p id="equipment-desc"></p>
+                <ul id="equipment-ul"></ul>
+            </div>
+        </div>
+
+        <h2>Paths</h2>
+        <div id="paths"></div>
+
+        <h2>Levels</h2>
+        <table id="level-table">
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Path</th>
+                    <th>Talents</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>Ancestry</td>
+                    <td id="talents-at-0"></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Novice</td>
+                    <td id="talents-at-1"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Novice</td>
+                    <td id="talents-at-2"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Expert</td>
+                    <td id="talents-at-3"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Ancestry</td>
+                    <td id="talents-at-4"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Novice</td>
+                    <td id="talents-at-5"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Expert</td>
+                    <td id="talents-at-6"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Master</td>
+                    <td id="talents-at-7"></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Novice</td>
+                    <td id="talents-at-8"></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Expert</td>
+                    <td id="talents-at-9"></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Master</td>
+                    <td id="talents-at-10"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="loading">
+        <h3>Loading...</h3>
+    </div>
+
+    <template id="custom-stat-increase">
+        <div class="input-group">
+            <label class="custom-stat-label label"></label>
+            <select class="custom-stat-select input">
+                <option>Strength</option>
+                <option>Agility</option>
+                <option>Intellect</option>
+                <option>Will</option>
+            </select>
+        </div>
+    </template>
+
+    <script src="./sotdlcc.js"></script>
+</body>
+
+</html>
