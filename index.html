@@ -1,72 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamillis - Home</title>
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-    <div class="menu-container">
-        <form action="https://google.com/search" method="get">
-            <input class="input fadein transparent" type="text" name="q"
-                placeholder="Search...">
-        </form>
-        <ol class="list">
-            <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
-            <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
-            <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
-            <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
-            <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
-            <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
-            <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
-            <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
-            <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
-            <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
-        </ol>
-    </div>
-</body>
-
-<script src="./unsplashBackground.js"></script>
-
-<script defer>
-(() => {
-    const DELAY_MS = 500;
-    let buffer = '';
-    let timer = null;
-
-    const flush = () => {
-        const n = parseInt(buffer, 10);
-        buffer = '';
-        timer = null;
-        if (n >= 1) {
-            const item = document.querySelector(`.list li:nth-child(${n}) a`);
-            if (item) item.click();
-        }
-    };
-
-    document.addEventListener('keydown', (e) => {
-        const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
-            ? e.key
-            : null;
-
-        if (!/^[1-9]$/.test(digit) && !(digit === '0' && buffer.length > 0)) return;
-
-        buffer += digit;
-        clearTimeout(timer);
-        timer = setTimeout(flush, DELAY_MS);
-        
-        if (buffer.length === 2) flush();
-    });
-})();
-</script>
-    
-</html>
+---
+layout: default
+---
+<div class="menu-container">
+    <form action="https://google.com/search" method="get">
+        <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
+    </form>
+    <ol class="list">
+        <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
+        <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
+        <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
+        <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
+        <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
+        <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
+        <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
+        <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
+        <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
+        <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
+    </ol>
+</div>
