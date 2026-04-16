@@ -4,7 +4,7 @@ const query = "Touhoku";
 const MINUTES = 15;
 const INTERVAL = MINUTES * 60 * 1000;
 
-await getUnsplash();
+getUnsplash();
 showRemaining(localStorage.getItem("unsplash_remaining") || 50);
 
 async function getUnsplash() {
