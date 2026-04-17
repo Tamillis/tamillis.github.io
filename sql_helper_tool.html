@@ -171,189 +171,187 @@ layout: default
   }
 </style>
 
-<div class="container">
-  <a href="index.html">Back</a>
+<a href="index.html">Back</a>
 
-  <h1>SQL helper tool</h1>
-  <h2 class="sr-only">Convert copy-paste Excel and CSV lists into SQL-ready syntax</h2>
+<h1>SQL helper tool</h1>
+<h2 class="sr-only">Convert copy-paste Excel and CSV lists into SQL-ready syntax</h2>
 
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('excel')">Excel → INSERT</button>
-    <button class="tab" onclick="switchTab('csv')">CSV → INSERT</button>
-    <button class="tab" onclick="switchTab('update')">Excel → UPDATE</button>
-    <button class="tab" onclick="switchTab('values')">List → VALUES</button>
-    <button class="tab" onclick="switchTab('in')">List → IN (...)</button>
-    <button class="tab" onclick="switchTab('case')">List → CASE WHEN</button>
-    <button class="tab" onclick="switchTab('cols')">Columns → SELECT</button>
-    <button class="tab" onclick="switchTab('escape')">Escape strings</button>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('excel')">Excel → INSERT</button>
+  <button class="tab" onclick="switchTab('csv')">CSV → INSERT</button>
+  <button class="tab" onclick="switchTab('update')">Excel → UPDATE</button>
+  <button class="tab" onclick="switchTab('values')">List → VALUES</button>
+  <button class="tab" onclick="switchTab('in')">List → IN (...)</button>
+  <button class="tab" onclick="switchTab('case')">List → CASE WHEN</button>
+  <button class="tab" onclick="switchTab('cols')">Columns → SELECT</button>
+  <button class="tab" onclick="switchTab('escape')">Escape strings</button>
+</div>
+
+<div class="outer-row">
+  <!-- EXCEL -->
+  <div class="panel active" id="panel-excel">
+    <p class="section-title">Excel paste → INSERT</p>
+    <p class="section-desc">Paste directly from Excel or Google Sheets. Tab-separated, any number of columns. Name
+      each column and pick its type — strings get quoted and single-quotes escaped automatically.</p>
+
+    <label>Paste your Excel data here</label>
+    <textarea id="excel-input" rows="5"
+      placeholder="BAXI - (ELSON,SANTON & HEATRAE)&#9;Customer must contact...&#9;0344 871 1540&#10;BURCO&#9;Plumbnation to contact...&#9;0333 220 6070"
+      oninput="parseExcel()"></textarea>
+
+    <div class="row">
+      <label style="margin:0;">Table</label>
+      <input type="text" id="excel-table" placeholder="dbo.MyTable" oninput="genExcel()">
+      <label style="margin:0; white-space:nowrap;">
+        <input type="checkbox" id="excel-one" onchange="genExcel()" style="margin-right:4px;">one per line
+      </label>
+      <label style="margin:0; white-space:nowrap;">
+        <input type="checkbox" id="excel-headers" onchange="parseExcel()" style="margin-right:4px;">first row =
+        headers
+      </label>
+    </div>
+
+    <div id="excel-col-wrap" style="display:none;">
+      <div class="out-label">Column names & types</div>
+      <div class="col-wrap"><span>Column name</span><span>Type</span></div>
+      <div id="excel-cols"></div>
+    </div>
   </div>
 
-  <div class="outer-row">
-    <!-- EXCEL -->
-    <div class="panel active" id="panel-excel">
-      <p class="section-title">Excel paste → INSERT</p>
-      <p class="section-desc">Paste directly from Excel or Google Sheets. Tab-separated, any number of columns. Name
-        each column and pick its type — strings get quoted and single-quotes escaped automatically.</p>
+  <div class="panel" id="panel-update">
+    <p class="section-title">Excel paste → UPDATE statements</p>
+    <p class="section-desc">Paste the key column and value column(s) from Excel. You can pick which column is the
+      key by setting it to WHERE, and all value columns to SET. IGNORE ignores.
+    </p>
 
-      <label>Paste your Excel data here</label>
-      <textarea id="excel-input" rows="5"
-        placeholder="BAXI - (ELSON,SANTON & HEATRAE)&#9;Customer must contact...&#9;0344 871 1540&#10;BURCO&#9;Plumbnation to contact...&#9;0333 220 6070"
-        oninput="parseExcel()"></textarea>
+    <label>Paste your Excel data here</label>
+    <textarea id="update-input" rows="5" placeholder="SKU&#9;Price&#10;ABC123&#9;19.99&#10;XYZ456&#9;34.50"
+      oninput="parseUpdate()"></textarea>
 
-      <div class="row">
-        <label style="margin:0;">Table</label>
-        <input type="text" id="excel-table" placeholder="dbo.MyTable" oninput="genExcel()">
-        <label style="margin:0; white-space:nowrap;">
-          <input type="checkbox" id="excel-one" onchange="genExcel()" style="margin-right:4px;">one per line
-        </label>
-        <label style="margin:0; white-space:nowrap;">
-          <input type="checkbox" id="excel-headers" onchange="parseExcel()" style="margin-right:4px;">first row =
-          headers
-        </label>
-      </div>
-
-      <div id="excel-col-wrap" style="display:none;">
-        <div class="out-label">Column names & types</div>
-        <div class="col-wrap"><span>Column name</span><span>Type</span></div>
-        <div id="excel-cols"></div>
-      </div>
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Table</label>
+      <input type="text" id="update-table" placeholder="dbo.MyTable" oninput="genUpdate()">
+      <label style="margin:0; white-space:nowrap;">
+        <input type="checkbox" id="update-headers" onchange="parseUpdate()" style="margin-right:4px;">first row =
+        headers
+      </label>
     </div>
 
-    <div class="panel" id="panel-update">
-      <p class="section-title">Excel paste → UPDATE statements</p>
-      <p class="section-desc">Paste the key column and value column(s) from Excel. You can pick which column is the
-        key by setting it to WHERE, and all value columns to SET. IGNORE ignores.
-      </p>
+    <div id="update-col-wrap" style="display:none;">
+      <div class="out-label">Column roles</div>
+      <div class="col-wrap"><span>Column name</span><span>Type</span><span>Role</span></div>
+      <div id="update-cols"></div>
+    </div>
+  </div>
 
-      <label>Paste your Excel data here</label>
-      <textarea id="update-input" rows="5" placeholder="SKU&#9;Price&#10;ABC123&#9;19.99&#10;XYZ456&#9;34.50"
-        oninput="parseUpdate()"></textarea>
+  <!-- VALUES -->
+  <div class="panel" id="panel-values">
+    <p class="section-title">List → VALUES inline table</p>
+    <p class="section-desc">One item per line. Generates a VALUES block for use in a FROM clause with LEFT JOIN.</p>
+    <label>Items (one per line)</label>
+    <textarea id="values-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO" oninput="genValues()"></textarea>
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Alias</label>
+      <input type="text" id="values-alias" value="v" style="width:80px;flex:none;" oninput="genValues()">
+      <label style="margin:0;">Column</label>
+      <input type="text" id="values-col" value="Company" style="width:130px;flex:none;" oninput="genValues()">
+    </div>
+  </div>
 
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Table</label>
-        <input type="text" id="update-table" placeholder="dbo.MyTable" oninput="genUpdate()">
-        <label style="margin:0; white-space:nowrap;">
-          <input type="checkbox" id="update-headers" onchange="parseUpdate()" style="margin-right:4px;">first row =
-          headers
-        </label>
-      </div>
+  <!-- IN -->
+  <div class="panel" id="panel-in">
+    <p class="section-title">List → IN (...)</p>
+    <p class="section-desc">One item per line. Wraps each in quotes and joins with commas for a WHERE clause.</p>
+    <label>Items (one per line)</label>
+    <textarea id="in-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO" oninput="genIn()"></textarea>
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Quote style</label>
+      <select id="in-quote" onchange="genIn()">
+        <option value="single">Single ' (strings)</option>
+        <option value="none">None (numbers)</option>
+        <option value="double">Double " (identifiers)</option>
+        <option value="square">Square [] (SQL Server)</option>
+      </select>
+    </div>
+  </div>
 
-      <div id="update-col-wrap" style="display:none;">
-        <div class="out-label">Column roles</div>
-        <div class="col-wrap"><span>Column name</span><span>Type</span><span>Role</span></div>
-        <div id="update-cols"></div>
-      </div>
+  <!-- ESCAPE -->
+  <div class="panel" id="panel-escape">
+    <p class="section-title">Escape string values</p>
+    <p class="section-desc">Doubles single quotes so O'Brien stops being a syntax error. One item per line.</p>
+    <label>Items (one per line)</label>
+    <textarea id="esc-input" rows="6" placeholder="O'Brien&#10;MARTIN IND'S" oninput="genEsc()"></textarea>
+  </div>
+
+  <!-- COLS -->
+  <div class="panel" id="panel-cols">
+    <p class="section-title">Column list → SELECT statement</p>
+    <p class="section-desc">Paste column names (one per line or comma-separated) and get a formatted SELECT.</p>
+    <label>Columns</label>
+    <textarea id="cols-input" rows="5" placeholder="ID&#10;FirstName&#10;LastName&#10;Email"
+      oninput="genColSelect()"></textarea>
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Table alias</label>
+      <input type="text" id="cols-alias" value="t" style="width:80px;flex:none;" oninput="genColSelect()">
+      <label style="margin:0;">FROM table</label>
+      <input type="text" id="cols-table" placeholder="dbo.MyTable" oninput="genColSelect()">
+    </div>
+  </div>
+
+  <!-- CASE -->
+  <div class="panel" id="panel-case">
+    <p class="section-title">List → CASE WHEN map</p>
+    <p class="section-desc">Map values to labels. Format: <code style="font-size:12px;">value=label</code> per line.
+    </p>
+    <label>Mappings (value=label per line)</label>
+    <textarea id="case-input" rows="6" placeholder="1=Active&#10;2=Inactive&#10;3=Pending"
+      oninput="genCase()"></textarea>
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Column
+        <input type="text" id="case-col" placeholder="ColumnName" style="width:130px;flex:none;" oninput="genCase()">
+      </label>
+      <label style="margin:0;">Else
+        <input type="text" id="case-else" placeholder="..." style="width:110px;flex:none;" oninput="genCase()">
+      </label>
+      <label style="margin:0;">Alias
+        <input type="text" id="case-alias" placeholder="Label" style="width:130px;flex:none;" oninput="genCase()">
+      </label>
+    </div>
+  </div>
+
+  <!-- CSV -->
+  <div class="panel" id="panel-csv">
+    <p class="section-title">CSV row → INSERT statement</p>
+    <p class="section-desc">Paste new line delineated rows with comma delineated columns. Toggle header row if one
+      is being used.</p>
+    <label style="margin-top:10px;">CSV data</label>
+    <textarea id="csv-input" rows="2" placeholder="ID,FirstName,LastName,Email&#10;1,Jane,O'Brien,jane@example.com"
+      oninput="parseCsv()"></textarea>
+
+    <div class="row" style="margin-top:10px;">
+      <label style="margin:0;">Table</label>
+      <input type="text" id="csv-table" placeholder="dbo.MyTable" oninput="genCsvInsert()">
+      <label style="margin:0; white-space:nowrap;">
+        <input type="checkbox" id="csv-one" onchange="genCsvInsert()" style="margin-right:4px;">one per line
+      </label>
+      <label style="margin:0; white-space:nowrap;">
+        <input type="checkbox" id="csv-headers" onchange="parseCsv()" style="margin-right:4px;">first row =
+        headers
+      </label>
     </div>
 
-    <!-- VALUES -->
-    <div class="panel" id="panel-values">
-      <p class="section-title">List → VALUES inline table</p>
-      <p class="section-desc">One item per line. Generates a VALUES block for use in a FROM clause with LEFT JOIN.</p>
-      <label>Items (one per line)</label>
-      <textarea id="values-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO" oninput="genValues()"></textarea>
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Alias</label>
-        <input type="text" id="values-alias" value="v" style="width:80px;flex:none;" oninput="genValues()">
-        <label style="margin:0;">Column</label>
-        <input type="text" id="values-col" value="Company" style="width:130px;flex:none;" oninput="genValues()">
-      </div>
+    <div id="csv-col-wrap" style="display:none;">
+      <div class="out-label">Column names & types</div>
+      <div class="col-wrap"><span>Column name</span><span>Type</span></div>
+      <div id="csv-cols"></div>
     </div>
 
-    <!-- IN -->
-    <div class="panel" id="panel-in">
-      <p class="section-title">List → IN (...)</p>
-      <p class="section-desc">One item per line. Wraps each in quotes and joins with commas for a WHERE clause.</p>
-      <label>Items (one per line)</label>
-      <textarea id="in-input" rows="6" placeholder="ARISTON&#10;BACKER&#10;BURCO" oninput="genIn()"></textarea>
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Quote style</label>
-        <select id="in-quote" onchange="genIn()">
-          <option value="single">Single ' (strings)</option>
-          <option value="none">None (numbers)</option>
-          <option value="double">Double " (identifiers)</option>
-          <option value="square">Square [] (SQL Server)</option>
-        </select>
-      </div>
-    </div>
+  </div>
 
-    <!-- ESCAPE -->
-    <div class="panel" id="panel-escape">
-      <p class="section-title">Escape string values</p>
-      <p class="section-desc">Doubles single quotes so O'Brien stops being a syntax error. One item per line.</p>
-      <label>Items (one per line)</label>
-      <textarea id="esc-input" rows="6" placeholder="O'Brien&#10;MARTIN IND'S" oninput="genEsc()"></textarea>
-    </div>
-
-    <!-- COLS -->
-    <div class="panel" id="panel-cols">
-      <p class="section-title">Column list → SELECT statement</p>
-      <p class="section-desc">Paste column names (one per line or comma-separated) and get a formatted SELECT.</p>
-      <label>Columns</label>
-      <textarea id="cols-input" rows="5" placeholder="ID&#10;FirstName&#10;LastName&#10;Email"
-        oninput="genColSelect()"></textarea>
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Table alias</label>
-        <input type="text" id="cols-alias" value="t" style="width:80px;flex:none;" oninput="genColSelect()">
-        <label style="margin:0;">FROM table</label>
-        <input type="text" id="cols-table" placeholder="dbo.MyTable" oninput="genColSelect()">
-      </div>
-    </div>
-
-    <!-- CASE -->
-    <div class="panel" id="panel-case">
-      <p class="section-title">List → CASE WHEN map</p>
-      <p class="section-desc">Map values to labels. Format: <code style="font-size:12px;">value=label</code> per line.
-      </p>
-      <label>Mappings (value=label per line)</label>
-      <textarea id="case-input" rows="6" placeholder="1=Active&#10;2=Inactive&#10;3=Pending"
-        oninput="genCase()"></textarea>
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Column
-          <input type="text" id="case-col" placeholder="ColumnName" style="width:130px;flex:none;" oninput="genCase()">
-        </label>
-        <label style="margin:0;">Else
-          <input type="text" id="case-else" placeholder="..." style="width:110px;flex:none;" oninput="genCase()">
-        </label>
-        <label style="margin:0;">Alias
-          <input type="text" id="case-alias" placeholder="Label" style="width:130px;flex:none;" oninput="genCase()">
-        </label>
-      </div>
-    </div>
-
-    <!-- CSV -->
-    <div class="panel" id="panel-csv">
-      <p class="section-title">CSV row → INSERT statement</p>
-      <p class="section-desc">Paste new line delineated rows with comma delineated columns. Toggle header row if one
-        is being used.</p>
-      <label style="margin-top:10px;">CSV data</label>
-      <textarea id="csv-input" rows="2" placeholder="ID,FirstName,LastName,Email&#10;1,Jane,O'Brien,jane@example.com"
-        oninput="parseCsv()"></textarea>
-
-      <div class="row" style="margin-top:10px;">
-        <label style="margin:0;">Table</label>
-        <input type="text" id="csv-table" placeholder="dbo.MyTable" oninput="genCsvInsert()">
-        <label style="margin:0; white-space:nowrap;">
-          <input type="checkbox" id="csv-one" onchange="genCsvInsert()" style="margin-right:4px;">one per line
-        </label>
-        <label style="margin:0; white-space:nowrap;">
-          <input type="checkbox" id="csv-headers" onchange="parseCsv()" style="margin-right:4px;">first row =
-          headers
-        </label>
-      </div>
-
-      <div id="csv-col-wrap" style="display:none;">
-        <div class="out-label">Column names & types</div>
-        <div class="col-wrap"><span>Column name</span><span>Type</span></div>
-        <div id="csv-cols"></div>
-      </div>
-
-    </div>
-
-    <div id="out-wrap" style="display:none;">
-      <div class="out-label">Output</div>
-      <div class="output" id="shared-out" onclick="copyShared()"></div>
-      <div class="copy-hint" id="shared-hint">click to copy</div>
-    </div>
+  <div id="out-wrap" style="display:none;">
+    <div class="out-label">Output</div>
+    <div class="output" id="shared-out" onclick="copyShared()"></div>
+    <div class="copy-hint" id="shared-hint">click to copy</div>
   </div>
 </div>
 
