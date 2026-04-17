@@ -17,3 +17,43 @@ layout: default
     <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
     <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
 </ol>
+
+<style>
+    
+.fadein {
+    transition: background-color 0.5s;
+}
+
+.fadein:hover {
+    background-color: var(--box-shadow-color);
+}
+
+.list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1em;
+}
+
+@media (min-width: 1200px) {
+    .list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.list-item {
+    list-style-position: inside;
+    padding: 0.25em;
+}
+
+a,
+a:visited,
+a:active {
+    color: var(--color-text-highlight);
+    text-decoration: none;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+}
+</style>
