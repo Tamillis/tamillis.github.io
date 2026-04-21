@@ -1,11 +1,15 @@
 //expose bonsai generation configuration
 const config = {
+    renderMode: "ascii",    //"ascii" or "line"
     startingEnergy: 100,
     crownPoint: 15,
     forkPoint: 10,
     branchChance: 12,    // %
     entropy: 8,
-    shadeLength: 4  //number of positions below a cell that counts as not in light
+    shyDist: 4,
+    shyEffect: 50,
+    minSize: 50,
+    maxBranches: 80
 }
 
 const world = {
@@ -73,7 +77,11 @@ ctx.strokeStyle = "brown"
 ctx.lineWidth = 1;
 ctx.textAlign = "center"
 
-let tree = [];
+let tree = new Map();
+const treeKey = (cell) => `${cell.x},${cell.y}`;
+let cells = [];
+let frame = 0;
+let branches = 0;
 
 let cell = (symbol = "~", x = 0, y = null, energy = null) => {
     if (y == null) y = world.height;
@@ -85,43 +93,51 @@ let cell = (symbol = "~", x = 0, y = null, energy = null) => {
         priorX: x,
         priorY: y,
         energy,
+        branchId: 0,
         dirIndex: Math.round((cellChanges.length - 1) / 2),
         age: 0,
         draw() {
-            // ctx.beginPath();
-            // ctx.moveTo(this.priorX * world.scale, this.priorY * world.scale);
-            // ctx.lineTo(this.x * world.scale, this.y * world.scale);
-            // ctx.stroke();
-
             ctx.fillStyle = this.symbol == "&" ? "green" : "brown";
-            ctx.fillText(this.symbol, this.x * world.scale, (this.y - 1) * world.scale);            
+            if(config.renderMode === "line") {
+                ctx.beginPath();
+                if(this.symbol == "&") {
+                    //green leaf circle
+                    ctx.arc(this.x * world.scale, this.y * world.scale, world.scale, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                else {
+                    ctx.moveTo(this.priorX * world.scale, this.priorY * world.scale);
+                    ctx.lineTo(this.x * world.scale, this.y * world.scale);
+                    ctx.stroke();
+                }
+            }
+            else if (config.renderMode === "ascii") {
+                ctx.fillText(this.symbol, this.x * world.scale, (this.y - 1) * world.scale);
+            }
         }
     }
 }
 
-let frame = 0;
-let branches = 0;
-
 growBonsai()
-
 function growBonsai() {
     //init tree
     document.getElementById("msg").innerText = "";
     branches = 0;
     frame = 0;
-    tree = [];
+    tree = new Map();
     let startCell = cell("~", Math.floor(world.width / 2));
-    tree[0] = startCell
+    startCell.branchId = 1;
+    tree.set(treeKey(startCell), startCell);
 
-    growBranch(startCell);
+    growBranch(startCell, 1);
     
-    if(tree.length < 50 || branches > 80) {
+    if(tree.size < config.minSize || branches > config.maxBranches) {
         growBonsai();
     }
     else {
-        console.log("Cells: " + tree.length)
-        console.log("Branches: " + branches)
-        tree = tree.sort((c1, c2) => c1.age - c2.age)
+        console.debug("Cells: " + tree.size);
+        console.debug("Branches: " + branches);
+        cells = tree = [...tree.values()].sort((c1, c2) => c1.age - c2.age);
     
         animate();
     }
@@ -136,12 +152,12 @@ function animate() {
     let max = Math.floor(frame / 5);
 
     for (let n = 0; n < max && n < tree.length; n++) {
-        tree[n].draw();
+        cells[n].draw();
     }
     frame++;
 
-    if (max >= tree.length) {
-        max = tree.length;
+    if (max >= cells.length) {
+        max = cells.length;
         document.getElementById("msg").innerText = "Tree Finished";
         return;
     }
@@ -154,9 +170,10 @@ function shouldSpawnBranch(cell) {
     (cell.energy < config.forkPoint + config.entropy / 2 && cell.energy > config.forkPoint - config.entropy / 2)
 }
 
-function growBranch(priorCell) {
+function growBranch(priorCell, branchId) {
     let newCell = cell("~", priorCell.x, priorCell.y, priorCell.energy - rand(1, config.entropy));
     newCell.age = priorCell.age + 1;
+    newCell.branchId = branchId;
 
     // The direction formula:
     // Each cell scans for sunlight, weighting directions with sunlight more than without (with == no cells above, without == cells within N positions above)
@@ -186,34 +203,39 @@ function growBranch(priorCell) {
     newCell.symbol = cellChanges[newCell.dirIndex].symbol;
     newCell.x += cellChanges[newCell.dirIndex].dx;
     newCell.y += cellChanges[newCell.dirIndex].dy;
-
+    
     if(newCell.energy < 1) newCell.symbol = "&";
-
+    
     if (newCell.x <= 1 || newCell.x >= world.width - 1 || newCell.y > world.height - 1 || newCell.y < 1) {
         newCell.symbol = "&";
         return
     }
-
-    tree.push(newCell);
-
+    
+    tree.set(treeKey(newCell), newCell);
+    
     if (newCell.energy < 1) return
-
+    
     if (shouldSpawnBranch(newCell)) {
         branches++;
-        growBranch(newCell)
+        growBranch(newCell, branches + 1)
     }
 
     growBranch(newCell);
 }
 
 function getLightAt(x, y) {
+    if (tree.has(`${x},${y}`)) return 0;
+
     let light = 100;
 
-    if(tree.filter(cell => cell.x == x && cell.y == y).length > 0) return 0;    //occupied cell
-
-    for(let n = 1; n < config.shadeLength; n++) {
-        if(tree.filter(cell => cell.x == x && cell.y == y - n).length > 0) light -= 50 / n;
-
+    for (let dx = -config.shyDist; dx <= config.shyDist; dx++) {
+        for (let dy = -config.shyDist; dy <= config.shyDist; dy++) {
+            const neighbour = tree.get(`${x+dx},${y+dy}`);
+            if (!neighbour) continue;
+            const dist = Math.max(Math.abs(dx), Math.abs(dy));
+            
+            light -= config.shyEffect / (dist || 1); // shade from neighbouring cell
+        }
     }
 
     return light;
