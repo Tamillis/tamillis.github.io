@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamillis - Home</title>
+    <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <style>
+    #in,
+    #out {
+        border: none;
+        border-radius: 0;
+        outline: 0;
+        border-bottom: 2px solid black;
+        font-size: 1rem;
+
+        color: var(--color-text);
+        width: min(95vw, 600px);
+        word-wrap: break-word;
+        resize: none;
+    }
+
+    #out {
+        min-height: 2rem;
+        margin: 0;
+        color: var(--color-text-highlight);
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    #cypher-key {
+        border-collapse: collapse;
+        width: min(95vw, 100%);
+        max-width: 100%;
+    }
+
+    #cypher-key th,
+    #cypher-key td {
+        border: 1px solid #999;
+        padding: 0.4rem 0.6rem;
+        text-align: center;
+        font-family: ui-monospace, monospace;
+        font-size: 0.95rem;
+    }
+
+    #cypher-key th {
+        white-space: nowrap;
+    }
+
+    .highlight-last {
+        background-color: var(--color-background-primary);
+    }
+
+    .highlight-encoded {
+        background-color: var(--color-background-secondary);
+    }
+
+    .highlight-same {
+        background: linear-gradient(
+            90deg, var(--color-background-primary) 0%, 
+            var(--color-background-primary) 50%, 
+            var(--color-background-secondary) 50%, 
+            var(--color-background-secondary) 100%);
+    }
+</style>
+
+<a href="index.html">Back</a>
+
+<h1>Vispag Cypher <img src="/vispag.svg"></h1>
+<p>An updated version of the Vsfzef Cypher</p>
+
+<p>Offset: <span id="cypher-key-offset"></span></p>
+<table id="cypher-key"></table>
+
+<textarea id="in" class="transparent" rows="1" wrap="soft" placeholder="Type text here..."></textarea>
+<p id="out"></p>
+
+<script>
+    const dom = (id) => document.getElementById(id) || document.querySelector(id);
+
+    const consonants = "qwrtpsdfghjklzxcvbnm".split("");
+    const vowels = "eyuioa".split("");
+    const digraphs = ["wr", "wh", "tr", "th", "pr", "ph", "pl", "st", "sp", "sh", "sk", "sn", "fr", "fl", "gr", "gl", "cr", "ct", "ch", "cl", "br", "bl", "nt", "nd", "ng"];
+    const trigraphs = ["thr", "str", "spr", "spl", "scr", "chr"];
+
+    const cypherSets = [
+        { name: "consonants", label: "Consonants", values: consonants },
+        { name: "vowels", label: "Vowels", values: vowels },
+        { name: "digraphs", label: "Digraphs", values: digraphs },
+        { name: "trigraphs", label: "Trigraphs", values: trigraphs }
+    ];
+
+    const cypherKey = dom("cypher-key");
+    const cypherKeyOffset = dom("cypher-key-offset");
+    const input = dom("in");
+    const output = dom("out");
+
+    createCypherTable();
+    input.addEventListener("input", vispag);
+
+    input.style.height = input.scrollHeight + "px";
+    input.style.overflowY = "hidden";
+    input.addEventListener("input", () => {
+        input.style.height = "auto";
+        input.style.height = input.scrollHeight + "px";
+    });
+
+    function createCypherTable() {
+        cypherKey.innerHTML = "";
+
+        cypherSets.forEach(({ name, label, values }) => {
+            const row = document.createElement("tr");
+            row.className = "cypher-key-row";
+
+            const header = document.createElement("th");
+            header.scope = "row";
+            header.textContent = label;
+            row.appendChild(header);
+
+            values.forEach((value) => {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                cell.dataset.set = name;
+                cell.dataset.value = value;
+                row.appendChild(cell);
+            });
+
+            cypherKey.appendChild(row);
+        });
+    }
+
+    function vispag() {
+        let words = input.value.trim().split(/\s+/);
+        let newText = "";
+
+        for (let wordIn of words) {
+            const match = wordIn.match(/^(\W*)([\w'-]+)(\W*)$/);
+            if (!match) {
+                newText += wordIn + " ";
+                continue;
+            }
+
+            let [, prefix, word, suffix] = match;
+            let encoded = "";
+
+            for (let charIndex = 1; charIndex <= word.length; charIndex++) {
+                let c = word[charIndex - 1];
+                let digraph = charIndex >= word.length ? "" : word[charIndex - 1] + word[charIndex];
+                let digraphMatch = digraph ? findGraph(digraph, digraphs) : "";
+                let trigraph = charIndex >= word.length - 1 ? "" : word.substring(charIndex - 1, charIndex + 2);
+                let trigraphMatch = trigraph ? findGraph(trigraph, trigraphs) : "";
+
+                if (trigraphMatch) {
+                    encoded += encodePart(trigraphMatch.original, trigraphs, charIndex);
+                    charIndex += 2;
+                } else if (digraphMatch) {
+                    encoded += encodePart(digraphMatch.original, digraphs, charIndex);
+                    charIndex++;
+                } else if (consonants.includes(c.toLowerCase())) {
+                    encoded += encodePart(c, consonants, charIndex);
+                } else if (vowels.includes(c.toLowerCase())) {
+                    encoded += encodePart(c, vowels, charIndex);
+                } else {
+                    encoded += c;
+                }
+            }
+
+            newText += prefix + encoded + suffix + " ";
+        }
+
+        output.textContent = newText.trim();
+        const { lastPart, encodedPart, partIndex } = getLastPartAndEncoded(input.value);
+        cypherKeyOffset.textContent = partIndex || "";
+        updateHighlights(lastPart, encodedPart);
+    }
+
+    function getLastPartAndEncoded(text) {
+        const trimmed = text.trimEnd();
+        const lastWordMatch = trimmed.match(/[\w'-]+$/);
+        if (!lastWordMatch) {
+            return { lastPart: null, encodedPart: null, partIndex: null };
+        }
+
+        const lastWord = lastWordMatch[0];
+        let lastPart = null;
+        let encodedPart = null;
+        let partIndex = null;
+
+        for (let charIndex = 1; charIndex <= lastWord.length; charIndex++) {
+            const c = lastWord[charIndex - 1];
+            const digraph = charIndex >= lastWord.length ? "" : lastWord.substring(charIndex - 1, charIndex + 1);
+            const digraphMatch = digraph ? findGraph(digraph, digraphs) : "";
+            const trigraph = charIndex >= lastWord.length - 1 ? "" : lastWord.substring(charIndex - 1, charIndex + 2);
+            const trigraphMatch = trigraph ? findGraph(trigraph, trigraphs) : "";
+
+            if (trigraphMatch) {
+                lastPart = trigraphMatch.original;
+                encodedPart = encodePart(trigraphMatch.original, trigraphs, charIndex);
+                partIndex = charIndex;
+                charIndex += 2;
+            } else if (digraphMatch) {
+                lastPart = digraphMatch.original;
+                encodedPart = encodePart(digraphMatch.original, digraphs, charIndex);
+                partIndex = charIndex;
+                charIndex++;
+            } else if (consonants.includes(c.toLowerCase())) {
+                lastPart = c;
+                encodedPart = encodePart(c, consonants, charIndex);
+                partIndex = charIndex;
+            } else if (vowels.includes(c.toLowerCase())) {
+                lastPart = c;
+                encodedPart = encodePart(c, vowels, charIndex);
+                partIndex = charIndex;
+            } else {
+                lastPart = c;
+                encodedPart = c;
+                partIndex = charIndex;
+            }
+        }
+
+        return { lastPart, encodedPart, partIndex };
+    }
+
+    function updateHighlights(lastPart, encodedPart) {
+        const cells = cypherKey.querySelectorAll("td");
+        cells.forEach((cell) => {
+            cell.classList.remove("highlight-last", "highlight-encoded", "highlight-same");
+        });
+
+        if (!lastPart) return;
+
+        const normalizedLast = lastPart.toLowerCase();
+        const normalizedEncoded = encodedPart ? encodedPart.toLowerCase() : null;
+        const sameValue = normalizedEncoded && normalizedLast === normalizedEncoded;
+
+        cells.forEach((cell) => {
+            const value = cell.dataset.value.toLowerCase();
+            if (sameValue && value === normalizedLast) {
+                cell.classList.add("highlight-same");
+            }
+            else if (value === normalizedLast) {
+                cell.classList.add("highlight-last");
+            }
+            else if (normalizedEncoded && value === normalizedEncoded) {
+                cell.classList.add("highlight-encoded");
+            }
+        });
+    }
+
+    function encodePart(part, set, index) {
+        const lower = part.toLowerCase();
+        const matchIndex = set.indexOf(lower);
+
+        if (matchIndex === -1) return part;
+
+        const encoded = set[(matchIndex + index) % set.length];
+        let result = "";
+
+        for (let i = 0; i < encoded.length; i++) {
+            result +=
+                part[i] === part[i].toUpperCase() && part[i] !== part[i].toLowerCase()
+                    ? encoded[i].toUpperCase()
+                    : encoded[i].toLowerCase();
+        }
+
+        return result;
+    }
+
+    function findGraph(graph, set) {
+        const lower = graph.toLowerCase();
+        if (set.includes(lower)) {
+            return {
+                matched: lower,
+                original: graph
+            };
+        }
+        return "";
+    }
+</script>
+        </main>
+    </main>
+
+    <footer id="footer">
+        <div style="display: flex; justify-content: space-between;">
+            <h4>Today in History</h4>
+            <button onclick="displayEvent()" class="btn">Another</button>
+        </div>
+        <p id="today-in-history-text"></p>
+    </footer>
+
+    <script>
+        let events = null;
+        displayEvent();
+        async function displayEvent() {
+            const eventText = await getOnThisDay();
+            document.getElementById('today-in-history-text').textContent = eventText;
+        }
+
+        async function getOnThisDay() {
+            if (!events) {
+                const url = `https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${new Date().getMonth() + 1}/${new Date().getDate()}`;
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.error('Failed to fetch data');
+                    return;
+                }
+                const data = await response.json();
+                events = data.events;
+            }
+
+            const randomEvent = events[Math.floor(Math.random() * events.length)];
+            return `On this day in ${randomEvent.year}: ${randomEvent.text}`;
+        }
+    </script>
+
+    <script src="./unsplashBackground.js"></script>
+
+    <script defer>
+        (() => {
+            const DELAY_MS = 500;
+            let buffer = '';
+            let timer = null;
+
+            const flush = () => {
+                const n = parseInt(buffer, 10);
+                buffer = '';
+                timer = null;
+                if (n >= 1) {
+                    const item = document.querySelector(`.list li:nth-child(${n}) a`);
+                    if (item) item.click();
+                }
+            };
+
+            document.addEventListener('keydown', (e) => {
+                const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
+                    ? e.key
+                    : null;
+
+                if (!/^[1-9]$/.test(digit) && !(digit === '0' && buffer.length > 0)) return;
+
+                buffer += digit;
+                clearTimeout(timer);
+                timer = setTimeout(flush, DELAY_MS);
+
+                if (buffer.length === 2) flush();
+            });
+        })();
+    </script>
+</body>
+
+</html>

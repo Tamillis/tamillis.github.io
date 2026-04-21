@@ -1,0 +1,149 @@
+{
+  "type": "ELF",
+  "onsets": [
+    "L",
+    "E'l",
+    "Au'l",
+    "Er",
+    "F",
+    "Ff",
+    "Gl",
+    "G",
+    "Th",
+    "S",
+    "Sl",
+    "Sh",
+    "Cle",
+    "Cla",
+    "Aer",
+    "Ith",
+    "N",
+    "M",
+    "Wy",
+    "Wh",
+    "W"
+  ],
+  "nuclei": [
+    "a",
+    "e",
+    "i",
+    "o",
+    "ae",
+    "ia",
+    "ui",
+    "ue",
+    "eu",
+    "ea",
+    "ië",
+    "ë",
+    "y"
+  ],
+  "codas": [
+    "l",
+    "l",
+    "n",
+    "n",
+    "r",
+    "r",
+    "s",
+    "th",
+    "nd",
+    "nn",
+    "niel",
+    "nieth",
+    "yth",
+    "sh",
+    "yn"
+  ],
+  "givenEndings": {
+    "Male": [
+      "ion",
+      "dir",
+      "thir",
+      "ron",
+      "las",
+      "mir",
+      "yn"
+    ],
+    "Female": [
+      "riel",
+      "wen",
+      "loth",
+      "iel",
+      "wyn",
+      "isse",
+      "yna"
+    ],
+    "Other": [
+      "iel",
+      "ion",
+      "en",
+      "ir",
+      "wen"
+    ]
+  },
+  "family": {
+    "compoundChance": 0.33,
+    "familySuffixes": [
+      "ion",
+      "iel",
+      "wyn",
+      "ndil",
+      "dell",
+      "thas",
+      "thrax",
+      "oël",
+      "elyn",
+      "wisp",
+      "fern",
+      "rae"
+    ],
+    "clanStarts": [
+      "Silver",
+      "Star",
+      "Moon",
+      "Dawn",
+      "Leaf",
+      "Song",
+      "Sky",
+      "Sea",
+      "Mind",
+      "Mana",
+      "Spring",
+      "Fall",
+      "Summer",
+      "Riven",
+      "Fallen",
+      "Brea"
+    ],
+    "clanEnds": [
+      "song",
+      "weaver",
+      "breeze",
+      "glade",
+      "runner",
+      "watcher",
+      "bough",
+      "whisper",
+      "tine",
+      "fall",
+      "sound",
+      "cry",
+      "loss"
+    ]
+  },
+  "weights": {
+    "syllables": [
+      1,
+      3,
+      5
+    ]
+  },
+  "onsetChance": 0.5,
+  "codaChance": 0.75,
+  "endingChance": 0.7,
+  "cleanup": {
+    "collapseVowels": "([aeiouy])\\1+",
+    "collapseConsonants": "([gjkmqrstvwxy])\\1+"
+  }
+}

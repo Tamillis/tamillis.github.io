@@ -2,21 +2,25 @@
 layout: default
 ---
 
-<form action="https://google.com/search" method="get">
-    <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
-</form>
-<ol class="list">
-    <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
-    <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
-    <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
-    <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
-    <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
-    <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
-    <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
-    <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
-    <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
-    <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
-</ol>
+<div class="menu-container">
+    <form action="https://google.com/search" method="get">
+        <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
+    </form>
+    <ol class="list">
+        <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
+        <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
+        <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
+        <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
+        <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
+        <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
+        <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
+        <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
+        <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
+        <li class="fadein list-item"><a href="bonsai/bonsai.html">Bonsai</a></li>
+        <li class="fadein list-item"><a href="vispag.html">Vispag Cypher</a></li>
+        <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
+    </ol>
+</div>
 
 <style>
     
@@ -36,7 +40,7 @@ layout: default
 
 @media (min-width: 1200px) {
     .list {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 }
 
@@ -45,15 +49,12 @@ layout: default
     padding: 0.25em;
 }
 
-a,
-a:visited,
-a:active {
-    color: var(--color-text-highlight);
-    text-decoration: none;
+input {
     width: 100%;
 }
 
-input {
-    width: 100%;
+.container {
+    max-width: 860px;
+    margin: 0 auto;
 }
 </style>

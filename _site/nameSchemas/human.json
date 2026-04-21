@@ -1,0 +1,29 @@
+{
+  "type": "HUMAN",
+  "onsets": ["B","Br","Cr","Ch", "Cl","D", "Dr","F","G","Gr","H","J","K","L","M","N","P","R","S","St", "Sw","T","Tr","Th", "Tw","W","Qu"],
+  "nuclei": ["a","a","e","i","o","a","e","i","o","u","ai", "ee", "ea","oo","ou"],
+  "codas": ["n","r", "rn", "rd", "rl", "l","s","t","d","l","s","t","d", "ld", "m", "m", "lm","k","ck", "lk", "nd", "nt", "st","th", "gh"],
+
+  "givenEndings": {
+    "Male": ["", "", "","eck","er","or","ton","ric","ard"],
+    "Female": ["", "y", "ie", "a", "a", "a","ia","elle","ine","lyn","arie", "dy"],
+    "Other": ["", "", "en","er","a","o","in", "ah"]
+  },
+
+  "family": {
+    "compoundChance": 0.35,
+    "familySuffixes": ["son","man","ford","wood","field","brook","smith","wright","hill", "by", "end", "ward", "kil", "lass", "gan"],
+    "clanStarts": ["Ash","Green","Red","Black","White","Oak","Stone","River","West","North", "Bell", "Abby", "Copse", "Hearth", "On", "Ward", "Wain", "Wold", "Over", "Thatch", "Cloth", "Weav"],
+    "clanEnds": ["wood","field","brook","ton","ford","well","son","man", "by", "er", "den", "march", "tower", "spear", "king", "ville"]
+  },
+
+  "weights": { "syllables": [5,3,1] },
+  "onsetChance": 0.90,
+  "codaChance": 0.6,
+  "endingChance": 0.75,
+
+  "cleanup": {
+    "collapseVowels": "([aeiou])\\1{2,}",
+    "collapseConsonants": "([cdfghjkmqrstvwxy])\\1+|([blnp])\\2{2,}"
+  }
+}

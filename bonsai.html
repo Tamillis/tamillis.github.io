@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<style>
+    nav {
+        display: flex;
+        gap: 1rem;
+        align-items: baseline;
+    }
+</style>
+
+<div>
+    <nav>
+        <a href="../index.html" class="w-fit">Back</a>
+
+        <section>
+            <p>Bonsai is in the public domain.</p>
+        
+            <p>
+                inspired by
+                <a href="https://www.reddit.com/r/unixporn/comments/amdt7m/2bwm_cat/">u/enjuus' rice</a>
+                <a href="https://avelican.github.io/bonsai/">Avelican's github</a>
+            </p>
+        </section>
+
+        <p id="msg" style="flex-grow:1"></p>
+        <button onclick="growBonsai()">Restart</button>
+    </nav>
+
+    <div id="canvas-container"></div>
+    <script src="bonsai.js"></script>
+</div>

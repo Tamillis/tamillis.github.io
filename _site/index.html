@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamillis - Home</title>
+    <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="menu-container">
+    <form action="https://google.com/search" method="get">
+        <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
+    </form>
+    <ol class="list">
+        <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
+        <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
+        <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
+        <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
+        <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
+        <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
+        <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
+        <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
+        <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
+        <li class="fadein list-item"><a href="bonsai/bonsai.html">Bonsai</a></li>
+        <li class="fadein list-item"><a href="vispag.html">Vispag Cypher</a></li>
+        <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
+    </ol>
+</div>
+
+<style>
+    
+.fadein {
+    transition: background-color 0.5s;
+}
+
+.fadein:hover {
+    background-color: var(--box-shadow-color);
+}
+
+.list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1em;
+}
+
+@media (min-width: 1200px) {
+    .list {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+}
+
+.list-item {
+    list-style-position: inside;
+    padding: 0.25em;
+}
+
+input {
+    width: 100%;
+}
+
+.container {
+    max-width: 860px;
+    margin: 0 auto;
+}
+</style>
+        </main>
+    </main>
+
+    <footer id="footer">
+        <div style="display: flex; justify-content: space-between;">
+            <h4>Today in History</h4>
+            <button onclick="displayEvent()" class="btn">Another</button>
+        </div>
+        <p id="today-in-history-text"></p>
+    </footer>
+
+    <script>
+        let events = null;
+        displayEvent();
+        async function displayEvent() {
+            const eventText = await getOnThisDay();
+            document.getElementById('today-in-history-text').textContent = eventText;
+        }
+
+        async function getOnThisDay() {
+            if (!events) {
+                const url = `https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${new Date().getMonth() + 1}/${new Date().getDate()}`;
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.error('Failed to fetch data');
+                    return;
+                }
+                const data = await response.json();
+                events = data.events;
+            }
+
+            const randomEvent = events[Math.floor(Math.random() * events.length)];
+            return `On this day in ${randomEvent.year}: ${randomEvent.text}`;
+        }
+    </script>
+
+    <script src="./unsplashBackground.js"></script>
+
+    <script defer>
+        (() => {
+            const DELAY_MS = 500;
+            let buffer = '';
+            let timer = null;
+
+            const flush = () => {
+                const n = parseInt(buffer, 10);
+                buffer = '';
+                timer = null;
+                if (n >= 1) {
+                    const item = document.querySelector(`.list li:nth-child(${n}) a`);
+                    if (item) item.click();
+                }
+            };
+
+            document.addEventListener('keydown', (e) => {
+                const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
+                    ? e.key
+                    : null;
+
+                if (!/^[1-9]$/.test(digit) && !(digit === '0' && buffer.length > 0)) return;
+
+                buffer += digit;
+                clearTimeout(timer);
+                timer = setTimeout(flush, DELAY_MS);
+
+                if (buffer.length === 2) flush();
+            });
+        })();
+    </script>
+</body>
+
+</html>
