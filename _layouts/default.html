@@ -56,49 +56,6 @@
     </script>
 
     <script src="./unsplashBackground.js"></script>
-
-    <script defer>
-        (() => {
-            const DELAY_MS = 500;
-            let buffer = '';
-            let timer = null;
-
-            const flush = () => {
-                const n = parseInt(buffer, 10);
-                buffer = '';
-                timer = null;
-                if (n >= 1) {
-                    const item = document.querySelector(`.list li:nth-child(${n}) a`);
-                    if (item) item.click();
-                }
-            };
-
-            document.addEventListener('keydown', (e) => {
-                const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
-                    ? e.key
-                    : null;
-
-                if (!/^[1-9]$/.test(digit) && !(digit === '0' && buffer.length > 0)) return;
-
-                buffer += digit;
-                clearTimeout(timer);
-                timer = setTimeout(flush, DELAY_MS);
-
-                if (buffer.length === 2) flush();
-            });
-
-            document.querySelectorAll(".param-input").forEach(input => {
-                input.addEventListener("keydown", e => {
-                    if(e.key !== "Enter") return;
-                    
-                    const value = e.target.value.trim();
-                    if (!value) return;
-                    const url = e.target.dataset.url + encodeURIComponent(value);
-                    window.location.href = url;
-                });
-            });
-        })();
-    </script>
 </body>
 
 </html>

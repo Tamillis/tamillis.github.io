@@ -3,6 +3,7 @@ layout: default
 ---
 
 <div class="menu-container">
+    <h3>Hello <small id="ip-addr"></small></h3>
     <form action="https://google.com/search" method="get">
         <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
     </form>
@@ -21,19 +22,23 @@ layout: default
         <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
         <li class="fadein list-item"><a href="https://bell-soft.co.uk">My Site</a></li>
     </ol>
-    <ol class="list">
-        <li class="fadein list-item input-item">
-            <label for="omni-order">Omni Order</label>
-            <input id="omni-order" type="text" class="param-input input fadein transparent"
-                data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
-        </li>
-        <li class="fadein list-item input-item">
-            <label for="omni-part">Omni Part</label>
-            <input id="omni-part" type="text" class="param-input input fadein transparent"
-                data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
-                value="PN7736902179B">
-        </li>
-    </ol>
+
+    <div id="omni-container">
+        <h4>Omni Utilities</h4>
+        <ol class="list">
+            <li class="fadein list-item input-item">
+                <label for="omni-order">Order</label>
+                <input id="omni-order" type="text" class="param-input input fadein transparent"
+                    data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
+            </li>
+            <li class="fadein list-item input-item">
+                <label for="omni-part">Part</label>
+                <input id="omni-part" type="text" class="param-input input fadein transparent"
+                    data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
+                    value="PN7736902179B">
+            </li>
+        </ol>
+    </div>
 </div>
 
 <style>
@@ -64,6 +69,8 @@ layout: default
 
     .input-item {
         grid-column: span 2;
+        display: flex;
+        gap: 1rem;
     }
 
     input {
@@ -75,3 +82,58 @@ layout: default
         margin: 0 auto;
     }
 </style>
+
+<script defer>
+    (() => {
+        const DELAY_MS = 500;
+        const ALLOWED_IP = "31.24.7.85";
+
+        let buffer = '';
+        let timer = null;
+
+        const flush = () => {
+            const n = parseInt(buffer, 10);
+            buffer = '';
+            timer = null;
+            if (n >= 1) {
+                const item = document.querySelector(`.list li:nth-child(${n}) a`);
+                if (item) item.click();
+            }
+        };
+
+        document.addEventListener('keydown', (e) => {
+            const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
+                ? e.key
+                : null;
+
+            if (!/^[1-9]$/.test(digit) && !(digit === '0' && buffer.length > 0)) return;
+
+            buffer += digit;
+            clearTimeout(timer);
+            timer = setTimeout(flush, DELAY_MS);
+
+            if (buffer.length === 2) flush();
+        });
+
+        document.querySelectorAll(".param-input").forEach(input => {
+            input.addEventListener("keydown", e => {
+                if (e.key !== "Enter") return;
+
+                const value = e.target.value.trim();
+                if (!value) return;
+                const url = e.target.dataset.url + encodeURIComponent(value);
+                window.location.href = url;
+            });
+        });
+
+        fetch("https://bell-soft.co.uk/whoami")
+            .then(r => r.text())
+            .then(ip => {
+                document.getElementById("ip-addr").innerText = ip;
+                if (ip.trim() === ALLOWED_IP) {
+                    document.getElementById("omni-container").style.display = "";
+                }
+            })
+            .catch((e) => { console.error(e) });
+    })();
+</script>
