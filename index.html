@@ -21,41 +21,64 @@ layout: default
         <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
         <li class="fadein list-item"><a href="https://bell-soft.co.uk">My Site</a></li>
     </ol>
+    <ol class="list">
+        <li class="fadein list-item">
+            <label for="omni-order">Omni Order</label>
+            <input id="omni-order" type="text" class="param-input"
+                data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
+        </li>
+        <li class="fadein list-item">
+            <label for="omni-part">Omni Part</label>
+            <input id="omni-part" type="text" class="param-input input fadein transparent"
+                data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
+                value="PN7736902179B">
+        </li>
+    </ol>
 </div>
 
 <style>
-    
-.fadein {
-    transition: background-color 0.5s;
-}
-
-.fadein:hover {
-    background-color: var(--box-shadow-color);
-}
-
-.list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    font-size: 1em;
-}
-
-@media (min-width: 1200px) {
-    .list {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    .fadein {
+        transition: background-color 0.5s;
     }
-}
 
-.list-item {
-    list-style-position: inside;
-    padding: 0.25em;
-}
+    .fadein:hover {
+        background-color: var(--box-shadow-color);
+    }
 
-input {
-    width: 100%;
-}
+    .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        font-size: 1em;
+    }
 
-.container {
-    max-width: 860px;
-    margin: 0 auto;
-}
+    @media (min-width: 1200px) {
+        .list {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+    }
+
+    .list-item {
+        list-style-position: inside;
+        padding: 0.25em;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .container {
+        max-width: 860px;
+        margin: 0 auto;
+    }
 </style>
+
+<script>
+document.querySelectorAll(".param-input").forEach(input => {
+    input.addEventListener("change", e => {
+        const value = e.target.value.trim();
+        if (!value) return;
+        const url = e.target.dataset.url + encodeURIComponent(value);
+        window.location.href = url;
+    });
+});
+</script>
