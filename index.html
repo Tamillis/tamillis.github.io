@@ -25,7 +25,7 @@ layout: default
 
     <h4>Omni Utilities</h4>
     <p id="omni-connect-msg">Attempting to connect...</p>
-    <ol class="list" id="omni-container">
+    <ol class="list hidden" id="omni-container">
         <li class="fadein list-item input-item">
             <label for="omni-order">Order</label>
             <input id="omni-order" type="text" class="param-input input fadein transparent"
@@ -135,11 +135,11 @@ layout: default
         fetch("https://omni.plumbworldnetwork.co.uk/", { mode: "no-cors" })
             .then(() => {
                 // reachable
+                dom("omni-container").classList.remove("hidden");
                 dom("omni-connect-msg").classList.add("hidden");
             })
             .catch(() => { 
                 dom("omni-connect-msg").innerText = "OMNI unreachable";
-                dom("omni-container").classList.add("hidden");
              });
     })();
 </script>
