@@ -130,7 +130,7 @@ layout: default
             .then(r => r.text())
             .then(ip => {
                 document.getElementById("ip-addr").innerText = ip;
-                if (ip.trim() === ALLOWED_IP) {
+                if (ip.trim() !== ALLOWED_IP) {
                     document.getElementById("omni-container").style.display = "";
                 }
             })
