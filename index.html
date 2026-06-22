@@ -23,11 +23,11 @@ layout: default
     </ol>
     <ol class="list">
         <li class="fadein list-item">
-            <label for="omni-order">Omni Order</label>
-            <input id="omni-order" type="text" class="param-input"
+            <label for="omni-order input-item">Omni Order</label>
+            <input id="omni-order" type="text" class="param-input input fadein transparent"
                 data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
         </li>
-        <li class="fadein list-item">
+        <li class="fadein list-item input-item">
             <label for="omni-part">Omni Part</label>
             <input id="omni-part" type="text" class="param-input input fadein transparent"
                 data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
@@ -62,6 +62,10 @@ layout: default
         padding: 0.25em;
     }
 
+    .input-item {
+        column-span: 2;
+    }
+
     input {
         width: 100%;
     }
@@ -71,14 +75,3 @@ layout: default
         margin: 0 auto;
     }
 </style>
-
-<script>
-document.querySelectorAll(".param-input").forEach(input => {
-    input.addEventListener("change", e => {
-        const value = e.target.value.trim();
-        if (!value) return;
-        const url = e.target.dataset.url + encodeURIComponent(value);
-        window.location.href = url;
-    });
-});
-</script>

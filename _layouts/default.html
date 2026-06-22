@@ -86,6 +86,17 @@
 
                 if (buffer.length === 2) flush();
             });
+
+            document.querySelectorAll(".param-input").forEach(input => {
+                input.addEventListener("keydown", e => {
+                    if(e.key !== "Enter") return;
+                    
+                    const value = e.target.value.trim();
+                    if (!value) return;
+                    const url = e.target.dataset.url + encodeURIComponent(value);
+                    window.location.href = url;
+                });
+            });
         })();
     </script>
 </body>
