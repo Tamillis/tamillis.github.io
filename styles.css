@@ -11,6 +11,12 @@
     --color-background-primary: hsl(39, 10%, 50%);
     --color-background-secondary: hsl(40, 3%, 20%);
     --font-mono: 'Lucida Console';
+
+    --fs-search: 1.75rem;
+    --fs-primary: 1.15rem;
+    --fs-body: 1rem;
+    --fs-small: 0.8rem;
+    --line: 1.5;
 }
 
 * {

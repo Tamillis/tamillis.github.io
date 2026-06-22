@@ -1,5 +1,5 @@
 function dom(selector) {
-    return document.getElementById(selector) || document.querySelector(selector);
+    return selector ? (document.getElementById(selector) || document.querySelector(selector)) : document;
 }
 
 function doms(selector) {

@@ -3,29 +3,35 @@ layout: default
 ---
 
 <div class="menu-container">
-    <h3>Hello <small id="ip-addr"></small></h3>
+    <h3 class="greeting">Hello <small id="ip-addr"></small></h3>
+
     <form action="https://google.com/search" method="get">
-        <input class="input fadein transparent" type="text" name="q" placeholder="Search...">
+        <input id="search-input" class="search-input input fadein transparent" type="text" name="q"
+            placeholder="Search..." autofocus>
     </form>
-    <ol class="list">
-        <li class="fadein list-item"><a href="https://youtube.com">Youtube</a></li>
-        <li class="fadein list-item"><a href="https://reddit.com">Reddit</a></li>
-        <li class="fadein list-item"><a href="https://docs.google.com">Docs</a></li>
-        <li class="fadein list-item"><a href="https://github.com/Tamillis">My GitHub</a></li>
-        <li class="fadein list-item"><a href="https://onedrive.com">Onedrive</a></li>
-        <li class="fadein list-item"><a href="https://editor.p5js.org">P5JS</a></li>
-        <li class="fadein list-item"><a href="https://soundcloud.com">Soundcloud</a></li>
-        <li class="fadein list-item"><a href="https://claude.ai">Claude</a></li>
-        <li class="fadein list-item"><a href="sql_helper_tool.html">SQL Helper</a></li>
-        <li class="fadein list-item"><a href="bonsai.html">Bonsai</a></li>
-        <li class="fadein list-item"><a href="vispag.html">Vispag Cypher</a></li>
-        <li class="fadein list-item col-span-2"><a href="sotdlcc.html">Shadow of the Demon Lord</a></li>
-        <li class="fadein list-item"><a href="https://bell-soft.co.uk">My Site</a></li>
+
+    <ol class="list list-primary section">
+        <li class="fadein list-item"><a href="https://claude.ai" data-hotkey="1"><span class="hotkey">1</span>Claude</a></li>
+        <li class="fadein list-item"><a href="https://docs.google.com" data-hotkey="2"><span class="hotkey">2</span>Docs</a></li>
+        <li class="fadein list-item"><a href="https://github.com/Tamillis" data-hotkey="3"><span class="hotkey">3</span>My GitHub</a></li>
+        <li class="fadein list-item"><a href="https://soundcloud.com" data-hotkey="4"><span class="hotkey">4</span>Soundcloud</a></li>
+        <li class="fadein list-item"><a href="sql_helper_tool.html" data-hotkey="5"><span class="hotkey">5</span>SQL Helper</a></li>
     </ol>
 
-    <h4>Omni Utilities</h4>
+    <ol class="list list-secondary section">
+        <li class="fadein list-item"><a href="https://youtube.com" data-hotkey="6"><span class="hotkey">6</span>Youtube</a></li>
+        <li class="fadein list-item"><a href="https://reddit.com" data-hotkey="7"><span class="hotkey">7</span>Reddit</a></li>
+        <li class="fadein list-item"><a href="https://onedrive.com" data-hotkey="8"><span class="hotkey">8</span>Onedrive</a></li>
+        <li class="fadein list-item"><a href="https://editor.p5js.org" data-hotkey="9"><span class="hotkey">9</span>P5JS</a></li>
+        <li class="fadein list-item"><a href="bonsai.html" data-hotkey="10"><span class="hotkey">10</span>Bonsai</a></li>
+        <li class="fadein list-item"><a href="vispag.html" data-hotkey="11"><span class="hotkey">11</span>Vispag Cypher</a></li>
+        <li class="fadein list-item"><a href="sotdlcc.html" data-hotkey="12"><span class="hotkey">12</span>Shadow of the Demon Lord</a></li>
+        <li class="fadein list-item"><a href="https://bell-soft.co.uk" data-hotkey="13"><span class="hotkey">13</span>My Site</a></li>
+    </ol>
+
+    <h4 class="section">Omni Utilities</h4>
     <p id="omni-connect-msg">Attempting to connect...</p>
-    <ol class="list hidden" id="omni-container">
+    <ol class="list" id="omni-container">
         <li class="fadein list-item input-item">
             <label for="omni-order">Order</label>
             <input id="omni-order" type="text" class="param-input input fadein transparent"
@@ -41,44 +47,74 @@ layout: default
 </div>
 
 <style>
-    .fadein {
-        transition: background-color 0.5s;
+    :root {
+        --fs-search: 1.75rem;
+        --fs-primary: 1.15rem;
+        --fs-body: 1rem;
+        --fs-small: 0.8rem;
+        --line: 1.5;
     }
 
-    .fadein:hover {
-        background-color: var(--box-shadow-color);
+    .greeting {
+        font-size: var(--fs-small);
+        font-weight: 400;
+        opacity: 0.7;
+    }
+
+    .search-input {
+        font-size: var(--fs-search);
+        width: 100%;
+        padding: 0.4em 0.5em;
+        line-height: var(--line);
+    }
+
+    .section {
+        margin-top: 1.5rem;
     }
 
     .list {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        font-size: 1em;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 1rem;
+        line-height: var(--line);
+        list-style: none;
     }
 
     @media (min-width: 1200px) {
-        .list {
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        .list-primary {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .list-secondary {
+            grid-template-columns: repeat(4, 1fr);
         }
     }
 
-    .list-item {
-        list-style-position: inside;
-        padding: 0.25em;
+    .list-primary {
+        font-size: var(--fs-primary);
+    }
+
+    .list-secondary {
+        font-size: var(--fs-body);
+        opacity: 0.75;
+    }
+
+    .list-item .hotkey {
+        font-size: var(--fs-small);
+        opacity: 0.5;
+        margin-right: 0.4em;
+        font-variant-numeric: tabular-nums;
     }
 
     .input-item {
         grid-column: span 2;
         display: flex;
         gap: 1rem;
+        align-items: center;
     }
 
-    input {
+    .input-item input {
         width: 100%;
-    }
-
-    .container {
-        max-width: 860px;
-        margin: 0 auto;
     }
 </style>
 
@@ -95,12 +131,12 @@ layout: default
             buffer = '';
             timer = null;
             if (n >= 1) {
-                const item = dom(`.list li:nth-child(${n}) a`);
+                const item = dom(`a[data-hotkey="${n}"]`);
                 if (item) item.click();
             }
         };
 
-        document.addEventListener('keydown', (e) => {
+        dom().addEventListener('keydown', (e) => {
             const digit = e.code.startsWith('Digit') || e.code.startsWith('Numpad')
                 ? e.key
                 : null;
@@ -138,8 +174,10 @@ layout: default
                 dom("omni-container").classList.remove("hidden");
                 dom("omni-connect-msg").classList.add("hidden");
             })
-            .catch(() => { 
+            .catch(() => {
                 dom("omni-connect-msg").innerText = "OMNI unreachable";
-             });
+            });
+
+        window.addEventListener("load", dom('search-input').focus());
     })();
 </script>
