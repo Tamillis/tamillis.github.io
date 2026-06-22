@@ -85,6 +85,10 @@ button {
     }
 }
 
+.hidden {
+    display: none !important;
+}
+
 .input {
     font-size: 1.333em;
     border: 0;

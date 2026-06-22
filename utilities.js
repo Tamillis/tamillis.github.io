@@ -2,6 +2,10 @@ function dom(selector) {
     return document.getElementById(selector) || document.querySelector(selector);
 }
 
+function doms(selector) {
+    return document.querySelectorAll(selector);
+}
+
 function el(tag, attr) {
     let elment = document.createElement(tag);
     for (let prop in attr) {

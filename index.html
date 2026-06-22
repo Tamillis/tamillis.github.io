@@ -23,22 +23,21 @@ layout: default
         <li class="fadein list-item"><a href="https://bell-soft.co.uk">My Site</a></li>
     </ol>
 
-    <div id="omni-container">
-        <h4>Omni Utilities</h4>
-        <ol class="list">
-            <li class="fadein list-item input-item">
-                <label for="omni-order">Order</label>
-                <input id="omni-order" type="text" class="param-input input fadein transparent"
-                    data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
-            </li>
-            <li class="fadein list-item input-item">
-                <label for="omni-part">Part</label>
-                <input id="omni-part" type="text" class="param-input input fadein transparent"
-                    data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
-                    value="PN7736902179B">
-            </li>
-        </ol>
-    </div>
+    <h4>Omni Utilities</h4>
+    <p id="omni-connect-msg">Attempting to connect...</p>
+    <ol class="list" id="omni-container">
+        <li class="fadein list-item input-item">
+            <label for="omni-order">Order</label>
+            <input id="omni-order" type="text" class="param-input input fadein transparent"
+                data-url="https://omni.plumbworldnetwork.co.uk/Order/Detail?internalOrderNumber=" value="J553739">
+        </li>
+        <li class="fadein list-item input-item">
+            <label for="omni-part">Part</label>
+            <input id="omni-part" type="text" class="param-input input fadein transparent"
+                data-url="https://omni.plumbworldnetwork.co.uk/Product/DetailsByPartNumber?partNumber="
+                value="PN7736902179B">
+        </li>
+    </ol>
 </div>
 
 <style>
@@ -96,7 +95,7 @@ layout: default
             buffer = '';
             timer = null;
             if (n >= 1) {
-                const item = document.querySelector(`.list li:nth-child(${n}) a`);
+                const item = dom(`.list li:nth-child(${n}) a`);
                 if (item) item.click();
             }
         };
@@ -115,7 +114,7 @@ layout: default
             if (buffer.length === 2) flush();
         });
 
-        document.querySelectorAll(".param-input").forEach(input => {
+        doms(".param-input").forEach(input => {
             input.addEventListener("keydown", e => {
                 if (e.key !== "Enter") return;
 
@@ -130,10 +129,17 @@ layout: default
             .then(r => r.text())
             .then(ip => {
                 document.getElementById("ip-addr").innerText = ip;
-                if (ip.trim() !== ALLOWED_IP) {
-                    document.getElementById("omni-container").style.display = "";
-                }
             })
             .catch((e) => { console.error(e) });
+
+        fetch("https://omni.plumbworldnetwork.co.uk/", { mode: "no-cors" })
+            .then(() => {
+                // reachable
+                dom("omni-connect-msg").classList.add("hidden");
+            })
+            .catch(() => { 
+                dom("omni-connect-msg").innerText = "OMNI unreachable";
+                dom("omni-container").classList.add("hidden");
+             });
     })();
 </script>
