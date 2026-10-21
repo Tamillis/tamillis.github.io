@@ -13,7 +13,7 @@ body {
     align-items: center;
     gap: 1rem;
     padding: 4rem;
-    height: 100vh;
+    min-height: 100vh;
 
     background-color: black;
 }
@@ -107,7 +107,7 @@ th {
 
 .label {
     font-weight: bold;
-    width: 75px;
+    width: 6.5rem;
     display: inline-block;
     text-align: right;
     padding-right: 0.5rem;
@@ -124,9 +124,39 @@ th {
 
 .input:active,
 .input:focus,
-.input:focus-visible {
+.input:focus-visible,
+.effect-choice-select:focus-visible {
     border: revert;
     outline: none;
+}
+
+.ancestry-effect-choice {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 0.4rem;
+    row-gap: 0.25rem;
+}
+
+.ancestry-talent-choices {
+    margin: 0.25rem 0 0.5rem 2rem;
+}
+
+.effect-choice-select {
+    flex: 0 1 auto;
+    max-width: 100%;
+    min-width: 12rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.profession-choice {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profession-choice select {
+    max-width: 100%;
 }
 
 .select {
@@ -147,22 +177,184 @@ th {
     display: flex;
 }
 
-.lock {
-    position: absolute;
-    right: calc(100% + 0.5rem);
-    width: fit-content;
-    display: flex;
-    gap: 0.5rem;
+.section-randomise {
+    display: grid;
+    place-items: center;
+    flex: 0 0 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    font-family: "Segoe UI Symbol", sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    text-align: center;
 }
 
-.lock-container {
-    position: relative;
+.section-container {
+    align-items: flex-start;
+}
+
+.ancestry-summary-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .two-col>* {
     width: 50%;
 }
 
+.three-col {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .three-col>* {
-    width: calc(33.3% - 1rem);
+    width: auto;
+    min-width: 0;
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 2rem 1rem;
+    }
+
+    .main {
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .three-col>* {
+        width: auto;
+    }
+
+    .three-col {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ancestry-effect-choice {
+        align-items: stretch;
+    }
+
+    .effect-choice-select {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media print {
+    *,
+    *::before,
+    *::after {
+        color: #000 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        display: block;
+        min-height: 0;
+        padding: 0;
+        background: #fff !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        break-after: avoid;
+    }
+
+    hr {
+        display: none;
+    }
+
+    .main {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        gap: 0.5rem;
+    }
+
+    #main {
+        display: flex !important;
+    }
+
+    .three-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+        gap: 1rem;
+        break-inside: avoid;
+    }
+
+    .three-col > * {
+        width: auto;
+        min-width: 0;
+    }
+
+    .input-group {
+        display: grid;
+        grid-template-columns: max-content max-content;
+        justify-content: start;
+        align-items: baseline;
+        gap: 0.4rem;
+        padding-bottom: 0.25rem;
+    }
+
+    .label {
+        width: auto;
+        padding: 0;
+        text-align: left;
+        overflow: visible;
+    }
+
+    input,
+    select,
+    .input,
+    .effect-choice-select {
+        width: auto !important;
+        min-width: 0;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        text-indent: 0;
+        border: 0 !important;
+        border-radius: 0;
+        outline: 0;
+        box-shadow: none;
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent !important;
+        color: #000 !important;
+    }
+
+    .input-group input[type="number"] {
+        width: 3em !important;
+    }
+
+    .effect-choice-select {
+        flex: 0 1 auto;
+    }
+
+    .ancestry-summary-field,
+    .ancestry-effect-choice {
+        break-inside: avoid;
+    }
+
+    .ancestry-summary-field {
+        align-items: baseline;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: none;
+    }
 }
