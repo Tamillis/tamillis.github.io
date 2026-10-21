@@ -2,32 +2,40 @@
   "type": "ELF",
   "onsets": [
     "L",
-    "E'l",
-    "Au'l",
-    "Er",
+    "L",
     "F",
     "Ff",
     "Gl",
     "G",
     "Th",
+    "Th",
     "S",
     "Sl",
     "Sh",
-    "Cle",
-    "Cla",
-    "Aer",
-    "Ith",
+    "Cl",
+    "Cl",
+    "R",
+    "R",
+    "Rr",
+    "N",
+    "N",
     "N",
     "M",
-    "Wy",
+    "M",
+    "W",
+    "W",
+    "W",
     "Wh",
-    "W"
+    "Wh"
   ],
   "nuclei": [
     "a",
     "e",
+    "e",
+    "i",
     "i",
     "o",
+    "ae",
     "ae",
     "ia",
     "ui",
@@ -36,50 +44,71 @@
     "ea",
     "ië",
     "ë",
+    "ë",
+    "y",
     "y"
   ],
   "codas": [
     "l",
     "l",
+    "'l",
+    "ll",
+    "h",
+    "h",
+    "gh",
+    "g",
     "n",
     "n",
+    "m",
     "r",
     "r",
     "s",
+    "t",
+    "th",
     "th",
     "nd",
+    "nd",
     "nn",
-    "niel",
-    "nieth",
+    "nth",
     "yth",
     "sh",
     "yn"
   ],
   "givenEndings": {
     "Male": [
+      "",
+      "",
       "ion",
+      "ien",
       "dir",
       "thir",
       "ron",
       "las",
       "mir",
+      "nir",
       "yn"
     ],
     "Female": [
       "riel",
       "wen",
       "loth",
+      "tha",
       "iel",
+      "ial",
       "wyn",
-      "isse",
+      "issë",
       "yna"
     ],
     "Other": [
+      "",
+      "",
+      "",
       "iel",
       "ion",
       "en",
       "ir",
-      "wen"
+      "wen",
+      "wë"
     ]
   },
   "family": {
@@ -114,7 +143,14 @@
       "Summer",
       "Riven",
       "Fallen",
-      "Brea"
+      "Brea",
+      "Wind",
+      "Feather",
+      "Sun",
+      "Shade",
+      "Water",
+      "Ice",
+      "Goss"
     ],
     "clanEnds": [
       "song",
@@ -126,24 +162,29 @@
       "bough",
       "whisper",
       "tine",
-      "fall",
+      "fell",
       "sound",
       "cry",
-      "loss"
+      "loss",
+      "tear",
+      "dance",
+      "glen",
+      "host"
     ]
   },
   "weights": {
     "syllables": [
-      1,
-      3,
-      5
+      2,
+      5,
+      7,
+      1
     ]
   },
-  "onsetChance": 0.5,
-  "codaChance": 0.75,
-  "endingChance": 0.7,
+  "onsetChance": 0.35,
+  "codaChance": 0.7,
+  "endingChance": 0.6,
   "cleanup": {
     "collapseVowels": "([aeiouy])\\1+",
-    "collapseConsonants": "([gjkmqrstvwxy])\\1+"
+    "collapseConsonants": "([gjkqrtvwxy])\\1+|([lnms])\\2{2,}"
   }
 }

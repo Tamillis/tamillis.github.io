@@ -1,6 +1,6 @@
 {
   "type": "HUMAN",
-  "onsets": ["B","Br","Cr","Ch", "Cl","D", "Dr","F","G","Gr","H","J","K","L","M","N","P","R","S","St", "Sw","T","Tr","Th", "Tw","W","Qu"],
+  "onsets": ["B","Br","Cr","Ch", "Cl","D", "Dr","F","G","Gr","H","J","K","L","M","N","P","R","S", "S", "St", "Str", "Sw","T","Tr","Th", "Tw","W","Qu"],
   "nuclei": ["a","a","e","i","o","a","e","i","o","u","ai", "ee", "ea","oo","ou"],
   "codas": ["n","r", "rn", "rd", "rl", "l","s","t","d","l","s","t","d", "ld", "m", "m", "lm","k","ck", "lk", "nd", "nt", "st","th", "gh"],
 
